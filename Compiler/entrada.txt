@@ -1,0 +1,753 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fn saludo(){
+    println!("Hola mundo!!!");
+    let mut a: i64 = 3;
+    let mut b: i64 = 3;
+    println!("la suma es : {}",a+b);
+}
+
+
+
+
+fn suma(n1: i64, n2: i64) -> i64{
+    println!("la suma es: {}", n1+n2);
+    println!("La resta es: {}", n1-n2);
+    return 0;
+}
+
+
+fn sumaRetorno(n1: i64, n2: i64) -> i64{
+    return n1+n2;
+}
+
+
+
+fn main() {
+    saludo();
+
+    let mut var1 = 6;
+    suma(var1 - 2,3);
+    println!("despues de la funcion suma");
+
+    let mut var1 = 6;
+    println!("{}",sumaRetorno(var1 - 2,3));
+    println!("despues de la funcion suma");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fn main(){
+    // paso 1    
+    struct Carro {
+        placa : String,
+        color : String
+    }
+
+    // paso 2 construir un struct
+    // paso 3 guardar en una variable
+
+    let mut c1 = Carro {placa:"090pl0", color:"gris"};
+    println!("{}", c1.placa);
+    println!("{}", c1.color);
+
+    c1.placa = "NUEVA PLACA";
+    c1.color = "cafe".to_string(); 
+    println!("{}", c1.placa);
+    println!("{}", c1.color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+fn main(){
+    // si lo crea 
+    // creacion de los modelos de los struct
+
+    struct Carro{
+        motor: String,
+        cilindraje: i64
+    }
+
+    struct Persona{
+        nombre: String,
+        anios: i64,
+        carro_: Carro
+    }
+
+
+    //asignacion 
+    // = bildStruct 
+
+
+    let mut persona = Persona{
+        nombre: "Mike".to_string(),
+        anios: 15,
+        carro_: Carro {
+            motor: "Grande".to_string(),
+            cilindraje: 1500
+        }
+    };
+
+
+    let mut c1 : Carro = Carro{motor: "Grande".to_string(),cilindraje: 1500};
+
+
+    println!("{}", persona.nombre);
+    println!("{}", persona.anios);
+    println!("{}", persona.carro_.motor);
+    println!("{}", persona.carro_.cilindraje);
+
+}
+
+
+
+
+
+
+
+
+
+
+struct Carro {
+    nombre:String
+}
+
+fn main() {
+    
+    let mut c1 = Carro{ nombre: "prueba"};
+
+    println!("{}",c1.nombre); 
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+fn main(){
+	struct Chasis{
+	    material: String
+	}
+	
+	struct Carro{
+	    marca: String,
+	    modelo: String,
+	    chasis: Chasis
+	}
+	
+	struct Persona{
+	    nombre: String,
+	    anios: i64,
+	    carro: Carro
+	}
+	
+	let varx = 3;
+	let mut vary = 0;
+	let mut varz = 1;
+	while vary <= varx {
+	    println!("{}",vary);
+	    if true{
+	        if true{
+	            if true{
+	                while true{
+	                    println!("^:)");
+	                    if varz == 3{
+	                        break;
+	                    }
+	                    varz = varz + 1;
+	                }
+	            }
+	        }
+	    }
+	    varz = 1;
+	    vary = vary + 1;
+	}
+	
+	let mut persona = Persona{
+	    nombre: "Mike".to_string(),
+	    anios: 30,
+	    carro: Carro{
+	                marca: "Toyota".to_string(), modelo: "Tercel".to_string(), chasis: Chasis{material: "Aluminio".to_string()}
+	         }
+	};
+
+	println!("{}",persona.carro.marca);
+	println!("{}",persona.carro.marca);
+	println!("{}",persona.carro.chasis.material);
+	println!("{}",persona.carro.chasis.material);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fn main() {
+    let  a = [1,2,3] ;
+    let mut b = [1,2,3,[6,4,[12,15]]] ;
+    let mut c :[i64;2] = [1,2,3];
+
+
+    println!("Antiguo valor es: {}", b[2]);
+    println!("{}", b[3][1]);
+    println!("{}", b[3][2][0]);
+
+
+    b[2] = 33;
+    b[3][1] = 100;
+    println!("Nuevo valores es: {}",b[2]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct CentroTuristico {
+    nombre:String
+}
+
+struct Carro {
+    placa: String,
+    color: String,
+    tipo: String
+}
+
+struct Personaje {
+    nombre: String,
+    edad: i64,
+    descripcion: String,
+    carro_: Carro,
+    numeros : StructArr
+}
+
+
+fn main() {
+    
+    println!("*******************STRUCT CON ARRAY"); 
+    
+    let mut da = StructArr {
+        datos: [10; 10]
+    };
+    
+    println!(" valor {} ",da.datos);
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PILA
+fn pila_vacia(vec: &mut Vec<i64>) -> bool {
+    return (vec.len()) == 0;
+}
+
+
+fn apilar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
+    if ((vec.len()) < capacidad) {
+        vec.insert(vec.len(), value);
+    } else {
+        println!("La pila ha llegado a su maxima capacidad");
+    }
+}
+
+
+fn desapilar(vec: &mut Vec<i64>) -> i64 {
+    if !pila_vacia(vec) {
+        return vec.remove(vec.len()-1);
+    } else {
+        println!("La pila no tiene elementos");
+    }
+    return 0;
+}
+
+
+
+// COLA
+fn cola_vacia(vec: &mut Vec<i64>) -> bool {
+    return vec.len() == 0;
+}
+
+
+fn encolar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
+    if vec.len() < capacidad {
+        vec.push(value);
+    } else {
+        println!("La cola ha llegado a su maxima capacidad");
+    }
+}
+
+
+fn desencolar(vec: &mut Vec<i64>) -> i64 {
+    if !cola_vacia(vec) {
+        return vec.remove(0);
+    } else {
+        println!("La cola no tiene elementos");
+    }
+    return 0;
+}
+
+
+fn main() {
+    let capacidad: usize = 10;
+    let mut pila: Vec<i64> = Vec::with_capacity(capacidad - 2);
+    let mut cola: Vec<i64> = Vec![1,2,3,4,5];
+
+    let datos: [i64; 5] = [10,20,30,40,50];
+
+    for dato in datos {
+        apilar(capacidad,pila, dato);
+    }
+
+    println!("{}", pila);
+
+    println!("{}", desapilar(pila));
+
+    apilar(capacidad,pila, 100);
+    apilar(capacidad,pila, 200);
+    apilar(capacidad,pila, 300);
+
+
+
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", desapilar(pila));
+    println!("{}", pila);
+
+
+    println!("Capacidad de pila");
+    println!("{}", pila.capacity());
+    println!("");
+
+
+    encolar(capacidad,cola, 800);
+    println!("{}", cola);
+
+
+    println!("{}", desencolar(cola));
+
+    encolar(capacidad,cola, 100);
+    encolar(capacidad,cola, 200);
+    encolar(capacidad,cola, 300);
+
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+    println!("{}", desencolar(cola));
+
+    println!("{}", cola);
+    println!("Capacidad de cola");
+    println!("{}", cola.capacity());
+    println!("");
+
+
+
+    // vectores entre vectores
+    let mut lista: Vec<Vec<i64>> = Vec::new();
+    
+    lista.push(Vec![0; 10]);
+    lista.push(Vec![1; 10]);
+    lista.push(Vec![2; 10]);
+    lista.push(Vec![3; 10]);
+    //lista.push(Vec![75,23,10,29,30,12,49,10,93]);
+
+
+    println!("{}", lista);
+    println!("");
+    println!("{}", lista[0]);
+    println!("{}", lista[1]);
+    println!("{}", lista[2]);
+    println!("{}", lista[3]);
+
+
+    let vec = Vec!["Hola", "!", "Sale", "Este", "Semestre", "2022"];
+    println!((vec.contains(&"Semestre")) || (vec.contains(&"2023")) );
+    println!((vec.contains(&"Semestre")) && (vec.contains(&"2023")) );
+    println!( vec.contains(&"Hola") );
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fn main() {
+
+    let vec = Vec!["Hola", "!", "Sale", "Este", "Semestre", "2022"];
+    println!(vec.contains(&"Semestre"));
+}
+
+
+
+
+
+
+
+fn main() {
+    let mut cola: Vec<i64> = Vec![1,2,3,4,5];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fn main() {
+
+    println!("-----------------------------------");
+    println!("----ARCHIVO BASICO SALIDA EN 3D----");
+    println!("-----------------------------------");
+        
+    
+    let bo1: bool = false;
+    let bol21: bool = !bo1;
+    let cad1: String = "imprimir".to_string();
+    let cad21: String = "cadena valida".to_string();
+    let letra1: char = 'c';
+    
+    
+    let val11 = 10 - (5 + 10 * (9 + 4 * (1 + 2 * 3)) - 8 * 3 * 6) + 5 * (2 * 2);
+    let val21 = (2 * 9 * 2 * 2) - 9 - (8 - 16 + (3 * 3 - 6 * 5 - 7 - (9 + 7 * 7 * 7) + 10) - 5) + 8 - (6 - 5 * (2 * 3));
+    let val31 = val11 + ((2 + val21 * 3) + 1 - ((2 * 2 * 2) - 2) * 2) - 2;
+	
+	
+    
+    let a:i64 = 100;
+    let b:i64 = 100;
+    let c:i64 = 7;
+    let f:bool = true;
+    let j:f64 = 10.0;
+    let k:f64 = 10.0;
+    
+	
+    let val1:i64 = 5;
+    let resp:i64 = 5;
+    let mut valorVerdadero : i64 = 100;
+	
+	
+    let x1: i64 = 15;
+	
+	
+
+
+    let abs1:i64 = 7-11;
+    let abs2:f64 = 10.0;
+    let raiz1:i64 = 9;
+    let raiz2:f64 = 100.0;
+    
+    
+
+    
+    println!("El valor de val11 es:              {}",val11);
+    println!("El valor de val21 es:              {}",val21);
+    println!("El valor de val31 es:              {}",val31);
+    println!("El resultado de la operación es:  {}",val31);
+    println!("El valor de bo1 es:                {}",bo1);
+    println!("El valor de cad1 es:               {}",cad1);
+    println!("El valor de cad21 es:               {}",cad21);
+    println!("El valor de letra1 es:             {}",letra1);
+    println!("El valor de bol21:            {}",bol21);
+    println!("");
+    
+
+    println!("");
+    println!("");
+    if (a > b || b < c ){
+        println!(">>>>>> Esto no debería de imprimirse");
+    }else{
+        println!(">>>>>> Esto debería de imprimirse");
+    }
+    
+    
+    if (a == b && j == k || 14 != c) {
+        println!(">>>>>> Esto debería de imprimirse");
+    }else{
+        println!(">>>>>> Esto no debería de imprimirse");
+    }
+    
+    
+    if((valorVerdadero == (50 + 50 + (val1 - val1))) && ! ! ! ! ! ! ! ! ! ! true) {
+        println!(">>>>>> En este lugar deberia de entrar :)");
+        valorVerdadero = 50;
+    }
+    else if (f || (valorVerdadero > 50)) && ((resp != 100) && ! ! ! ! ! f){
+        println!(">>>>>> Aca no deberia de entrar :ccc");
+        valorVerdadero = 70;
+    }
+    else{
+        println!(">>>>>> Aca no deberia de entrar :cccc");
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+fn main() {
+
+    let abs1:i64 = 7-11;
+
+    println!(" valor absoluto1: {}",abs1.abs());
+    
+}
+
+
+
+
+
+fn main() {
+
+    let abs1:i64 = 7-11;
+
+    println!(" valor absoluto1: {}",(abs1.abs()));
+    
+}
+
+
+
+
+
+
+fn main() {
+
+    let abs1:i64 = 10.0;
+
+    println!(abs1);
+    
+}
+
+
+
+
+
+
+
+
+
