@@ -39,7 +39,7 @@ tokens = [
     'ID',
     'COMENTARIO'
     # 'CONCATENARSTR'
- ]  
+]  
 
 reservadas = {
     'String'        : 'STRING',

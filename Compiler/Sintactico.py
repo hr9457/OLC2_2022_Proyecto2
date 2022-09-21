@@ -136,7 +136,7 @@ precedence = (
     ('left', 'IGUALDAD' ,'DIFERENTE'),
     ('left', 'MENOR', 'MAYOR', 'MAYORIGUAL', 'MENORIGUAL'),
     ('left', 'MAS', 'MENOS'),
-    ('left', 'MULTIPLICAR', 'DIV'),
+    ('left', 'MULTIPLICAR', 'DIV', 'PORCENTAJE'),
     ('right', 'UMENOS')
     )
 
@@ -1378,14 +1378,14 @@ def p_instruccion_forin_arreglos(p):
 #  INSTRUCCIONE PARA MANEJO DE LOS ARREGLOS
 # ******************************************
 
-def p_expresion_arreglo(p):
-    #     0                  1               2                3
-    ' expresionArreglo : CORCHETEDERECHO listadoArreglo CORCHETEIZQUIERDO '
-    p[0] = ExpArreglo(
-        p.lineno(1),
-        columnToken(input, p.slice[1]),
-        p[2]
-    )
+# def p_expresion_arreglo(p):
+#     #     0                  1               2                3
+#     ' expresionArreglo : CORCHETEDERECHO listadoArreglo CORCHETEIZQUIERDO '
+#     p[0] = ExpArreglo(
+#         p.lineno(1),
+#         columnToken(input, p.slice[1]),
+#         p[2]
+#     )
 
 
 
@@ -1585,6 +1585,7 @@ def p_aritmetica(p):
             | exp MENOS exp 
             | exp MULTIPLICAR exp 
             | exp DIV exp
+            | exp PORCENTAJE exp
             | exp MAYOR exp 
             | exp MENOR exp 
             | exp MAYORIGUAL exp 
@@ -1609,6 +1610,10 @@ def p_aritmetica(p):
     elif p[2] == '/':
         # p[0] = p[1] / p[3]
         p[0] = Aritmetica(0, 0,  p[1], TipoOperador.DIV, p[3])
+
+    elif p[2] == '%':
+        # p[0] = p[1] % p[3]
+        p[0] = Aritmetica(0, 0, p[1], TipoOperador.PORCENTAJE, p[3])
 
 
     elif p[2] == '>':
@@ -1752,15 +1757,15 @@ def p_expresion(p):
 
 # exp tipo espcial
 # exp para funciones
-def p_expresion_llamada_funcion(p):
-    ' exp : ID PARENTESISIZQUIERDO PARENTESISDERECHO '
-    p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), None, p[1], tablaErrores)
+# def p_expresion_llamada_funcion(p):
+#     ' exp : ID PARENTESISIZQUIERDO PARENTESISDERECHO '
+#     p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), None, p[1], tablaErrores)
 
 
 
-def p_expresion_llamada_funcion_parametros(p):
-    ' exp : ID PARENTESISIZQUIERDO parametrosllamado PARENTESISDERECHO '
-    p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), p[3], p[1], tablaErrores)
+# def p_expresion_llamada_funcion_parametros(p):
+#     ' exp : ID PARENTESISIZQUIERDO parametrosllamado PARENTESISDERECHO '
+#     p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), p[3], p[1], tablaErrores)
 
 
 

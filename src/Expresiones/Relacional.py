@@ -274,6 +274,11 @@ class Relacional(Expresion):
     def traducir(self, entorno, traductor3d, cadena):
 
 
+        # cadena para concatenar
+        cadenaTraduccion3d = ''
+
+
+
         # ejecutamos nodos derecha y izquierda
         nodoIzquierdo = self.leftExp.traducir(entorno, traductor3d, cadena)
         nodoDerecho = self.rightExp.traducir(entorno, traductor3d, cadena)
@@ -284,14 +289,26 @@ class Relacional(Expresion):
         # verificacion si algun nodod que sube es una variable para buscar su valoe en el entorno
         if nodoIzquierdo.tipo == TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
 
+
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
 
+
         elif nodoIzquierdo.tipo == TipoExpresion.ID and nodoDerecho.tipo != TipoExpresion.ID:
 
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            traductor3d.addCadenaTemporal('\n')
+            traductor3d.addCadenaTemporal('\n')
+            traductor3d.addCadenaTemporal(f't{temporal_actual} = stack[(int) {nodoIzquierdo.posicion}];\n')
+
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
+            nodoIzquierdo.valor = f't{temporal_actual}'
+
 
         elif nodoIzquierdo.tipo != TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
+
 
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
 
@@ -300,8 +317,8 @@ class Relacional(Expresion):
 
         # COMPARACION DE TIPO DE REALCION
         if self.operador == TipoRelacional.MAYORQUE:
-            cadenaTraduccion3d = ''
-
+            # cadenaTraduccion3d = ''
+            
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} > {nodoDerecho.valor}'
             return Simbolo3d(
                 self.fila,
@@ -318,7 +335,7 @@ class Relacional(Expresion):
 
 
         elif self.operador == TipoRelacional.MAYORIGUALQUE:
-            cadenaTraduccion3d = ''
+            # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} >= {nodoDerecho.valor}'
             return Simbolo3d(
@@ -336,7 +353,7 @@ class Relacional(Expresion):
 
 
         elif self.operador == TipoRelacional.MENORQUE:
-            cadenaTraduccion3d = ''
+            # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} < {nodoDerecho.valor}'
             return Simbolo3d(
@@ -354,7 +371,7 @@ class Relacional(Expresion):
 
 
         elif self.operador == TipoRelacional.MENORQUE:
-            cadenaTraduccion3d = ''
+            # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} <= {nodoDerecho.valor}'
             return Simbolo3d(
@@ -372,7 +389,7 @@ class Relacional(Expresion):
 
 
         elif self.operador == TipoRelacional.IGUALDAD:
-            cadenaTraduccion3d = ''
+            # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} == {nodoDerecho.valor}'
             return Simbolo3d(
@@ -389,7 +406,7 @@ class Relacional(Expresion):
 
 
         elif self.operador == TipoRelacional.DIFERENTE:
-            cadenaTraduccion3d = ''
+            # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} != {nodoDerecho.valor}'
             return Simbolo3d(

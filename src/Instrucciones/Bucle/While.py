@@ -80,3 +80,91 @@ class While(Instruccion):
             self.tablaErrores.append(['WHILE: Condicion no es tipo bool',entorno.nombre,self.fila,self.columna])
             # --------------------------------
             return Error('WHILE: Condicion no es tipo bool').ejecutar()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def traducir(self, entorno, traductor3d, cadena):
+        
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*------- WHILE -------*/\n'
+
+
+        # variable pivote para enciclar el while
+        pivote = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+        cadenaTraduccion3d += f'L{pivote}:\n'
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+        cadenaTraduccion3d = ''
+        
+
+        # condicional para enciclar
+        etiqueta_if = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+
+        etiqueta_else = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+
+
+        expresion3d = self.expresion.traducir(entorno, traductor3d, cadena)
+
+
+        # condicional para enciclar
+        cadenaTraduccion3d += f'if ( {expresion3d.valor} ) goto L{etiqueta_if};\n'
+        cadenaTraduccion3d += f'goto L{etiqueta_else};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'L{etiqueta_if}:\n'
+
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+        cadenaTraduccion3d = ''
+
+
+        # instrucciones del if
+        for instruccion in self.nodo:
+
+            instruccion.traducir(entorno, traductor3d, cadena)	
+
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'goto L{pivote};\n'
+        cadenaTraduccion3d += f'\n'
+
+        cadenaTraduccion3d += f'L{etiqueta_else}:\n\n'
+
+
+
+        # *********************** TRADUCCION *********************
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+        
+
+
+
+
+        
+        
+        return None

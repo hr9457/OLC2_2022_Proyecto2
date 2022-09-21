@@ -612,6 +612,11 @@ fn main() {
 
 
 
+ARCHIVO BASICO
+
+
+
+
 fn main() {
 
     println!("-----------------------------------");
@@ -699,7 +704,82 @@ fn main() {
     }
 
 
+    if x1 % 2 == 0 {
+        println!(">>>>> numeroPar ingreso a if verdadero, {} es par",x1);
+    }
+    else {
+        println!(">>>>> numeroPar ingreso a if falso, {} no es par",x1);
+    }
+
+
+    println!("");
+    println!("*************PRUEBA DE NATIVAS");
+    println!(" valor de b: {}",b);
+    
+    println!(" valor absoluto1: {}",(abs1.abs()) );
+    println!(" valor absoluto2: {}",(abs2.abs()) );
+    println!(" valor raiz1: {}",(raiz1 as f64).sqrt());
+    println!(" valor raiz2: {}",(raiz2.sqrt()));
+
 }
+
+
+
+
+
+
+
+fn main() {
+
+
+    let a:i64 = 100;
+    let b:i64 = 100;
+    let c:i64 = 7;
+    let f:bool = true;
+    let j:f64 = 10.0;
+    let k:f64 = 10.0;
+    
+
+    if (a == b && j == k || 14 != c) {
+        println!(">>>>>> Esto debería de imprimirse");
+    }else{
+        println!(">>>>>> Esto no debería de imprimirse");
+    }
+
+}
+
+
+
+
+
+
+
+
+
+fn main() {
+
+    let mut index: i64 = 0;
+
+    while (index >= 0) {
+
+        if (index == 0) {
+            index = index + 100;
+
+        } else if (index > 50) {
+            index = index / 2 - 25;
+
+        } else {
+            index = (index / 2) - 1;
+
+        } 
+
+        println!("{}",index);
+    }
+
+
+}
+
+
 
 
 
@@ -712,42 +792,16 @@ fn main() {
 
 fn main() {
 
-    let abs1:i64 = 7-11;
+    let mut index: i64 = 0;
 
-    println!(" valor absoluto1: {}",abs1.abs());
-    
+    while (index >= 0) {
+
+        println!("while");
+        index = index - 1;
+    }
+
+
 }
-
-
-
-
-
-fn main() {
-
-    let abs1:i64 = 7-11;
-
-    println!(" valor absoluto1: {}",(abs1.abs()));
-    
-}
-
-
-
-
-
-
-fn main() {
-
-    let abs1:i64 = 10.0;
-
-    println!(abs1);
-    
-}
-
-
-
-
-
-
 
 
 

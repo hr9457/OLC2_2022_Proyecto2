@@ -194,7 +194,9 @@ class Aritmetica(Expresion):
 
 
 
-    # traduccion en 3d
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
 
 
@@ -355,6 +357,36 @@ class Aritmetica(Expresion):
 
 
 
+                # PORCENTAJE
+                if self.operador == TipoOperador.PORCENTAJE:
+                    # obteniendo valores de los nodos
+                    resultadoNodoIzquierdo = nodoIzquierdo.valor
+                    resultadoNodoDerecho = nodoDerecho.valor
+
+                    # ********** traduccion **************
+                    # obtengo el valor actual de los temporales
+                    temporalActual = traductor3d.getTemporal()
+
+                    cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
+                    traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+                    traductor3d.aumentarTemporal()
+
+                    return Simbolo3d(
+                        self.fila,
+                        self.columna,
+                        None,
+                        TipoExpresion.INTEGER,
+                        f't{temporalActual}',
+                        None,
+                        0,
+                        0
+                    )
+                    # *************************************
+
+
+
+
+
 
             # evaluacion de tipo valor --> FLOAT
             elif  nodoIzquierdo.tipo == TipoExpresion.FLOAT:
@@ -455,6 +487,34 @@ class Aritmetica(Expresion):
                     temporalActual = traductor3d.getTemporal()
 
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} / {resultadoNodoDerecho} ;\n'
+                    traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+                    traductor3d.aumentarTemporal()
+
+                    return Simbolo3d(
+                        self.fila,
+                        self.columna,
+                        None,
+                        TipoExpresion.FLOAT,
+                        f't{temporalActual}',
+                        None,
+                        0,
+                        0
+                    )
+                    # *************************************
+
+
+
+                # PORCENTAJE
+                if self.operador == TipoOperador.PORCENTAJE:
+                    # obteniendo valores de los nodos
+                    resultadoNodoIzquierdo = nodoIzquierdo.valor
+                    resultadoNodoDerecho = nodoDerecho.valor
+
+                    # ********** traduccion **************
+                    # obtengo el valor actual de los temporales
+                    temporalActual = traductor3d.getTemporal()
+
+                    cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 

@@ -524,8 +524,14 @@ class Imprimir(Instruccion):
         # impiresion de expresiones tipo string
         if resultado.tipo == TipoExpresion.STRING:
             # haciendo split de la cadena
+
+
+            llaves_iniciales = 0
+            cantidad_llaves = resultado.valor.count('{}')
+
             stringDividido = resultado.valor.split('{}')
-            stringDividido.pop()
+            
+            # stringDividido.pop()
 
 
             for elementoString in stringDividido:
@@ -566,13 +572,15 @@ class Imprimir(Instruccion):
 
 
                 # IMPRIMIR LA EXPRESION DESPUES DEL {}
-                expresion = self.lista[countNodoDerecho]
-                expresion3d = expresion.traducir(entorno, traductor3d, cadena)
-                countNodoDerecho += 1
+                if llaves_iniciales < cantidad_llaves:
+                    expresion = self.lista[countNodoDerecho]
+                    expresion3d = expresion.traducir(entorno, traductor3d, cadena)
+                    countNodoDerecho += 1
+                    llaves_iniciales += 1
                 
 
-                # IMPRESION DE LA EXPRESION SIMPLE
-                cadenaTraduccion3d += self.impresionSimple(expresion3d, entorno, traductor3d, cadena)
+                    # IMPRESION DE LA EXPRESION SIMPLE
+                    cadenaTraduccion3d += self.impresionSimple(expresion3d, entorno, traductor3d, cadena)
                     
 
         # *********************************************
