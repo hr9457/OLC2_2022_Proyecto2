@@ -115,7 +115,7 @@ tablaErrores = []
 
 # importacion para el manejo de la traduccion 3d
 from src.environment3d.Enviroment3d import Environment3d
-
+from src.environment.Simbolo3d import Simbolo3d
 
 
 
@@ -308,7 +308,16 @@ def p_instruccion(p):
 def p_instruccion_break(p):
     ' instruccionBreak : BREAK PUNTOCOMA '
     p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.BREAK, None)
-
+    # p[0] = Simbolo3d(
+    #     p.lineno(1),
+    #     columnToken(input, p.slice[1]),
+    #     None,
+    #     TipoExpresion.BREAK,
+    #     None,
+    #     None,
+    #     0,
+    #     0
+    #     )
 
 
 
@@ -319,7 +328,16 @@ def p_instruccion_break(p):
 def p_instruccion_continue(p):
     ' instruccionContinue : CONTINUE PUNTOCOMA '
     p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.CONTINUE, None)
-
+    # p[0] = Simbolo3d(
+    #     p.lineno(1),
+    #     columnToken(input, p.slice[1]),
+    #     None,
+    #     TipoExpresion.CONTINUE,
+    #     None,
+    #     None,
+    #     0,
+    #     0
+    #     )
 
 
 
@@ -330,7 +348,16 @@ def p_instruccion_return(p):
     #       0              1     2     3
     ' instruccionReturn : RETURN exp PUNTOCOMA '
     p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.RETURN, p[2])
-
+    # p[0] = Simbolo3d(
+    #     p.lineno(1),
+    #     columnToken(input, p.slice[1]),
+    #     None,
+    #     TipoExpresion.RETURN,
+    #     None,
+    #     None,
+    #     0,
+    #     0
+    #     )
 
 
 

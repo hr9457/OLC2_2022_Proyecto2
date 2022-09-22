@@ -150,8 +150,14 @@ class While(Instruccion):
 
 
         cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*- PIVOTE DEL WHILE -*/\n'
+        cadenaTraduccion3d += traductor3d.getSaltoContinue()
         cadenaTraduccion3d += f'goto L{pivote};\n'
         cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        
+
 
         cadenaTraduccion3d += f'L{etiqueta_else}:\n\n'
 
@@ -161,7 +167,11 @@ class While(Instruccion):
         traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
         
-
+        # PARA MANEJO DEL SALIDA BREAK:
+        # instruccion de quiebre
+        traductor3d.addCadenaTemporal(traductor3d.getSaltoBreak())
+        traductor3d.clearSaltoBreak()
+        traductor3d.clearSaltoContinue()
 
 
 

@@ -12,6 +12,9 @@ class Environment3d:
         self.contenidoMain = '' 
         self.cadenaTemporal = ''
         self.saltosTemporales = ''
+        self.saltoBreak = ''
+        self.saltoContinue = ''
+        self.saltoRetun = ''
 
 
     
@@ -220,3 +223,38 @@ class Environment3d:
 
     def clearSaltosTemporales(self):
         self.saltosTemporales = ''
+
+
+
+
+
+
+
+
+
+
+    # menajo de saltos
+    def getSaltoBreak(self):
+        return self.saltoBreak
+
+
+    def addSaltoBreak(self, cadena):
+        self.saltoBreak += cadena
+
+
+    def clearSaltoBreak(self):
+        self.saltoBreak = ''
+
+
+    
+
+    def getSaltoContinue(self):
+        return self.saltoContinue
+
+    
+    def addSaltoContinue(self, cadena):
+        self.saltoContinue += cadena
+
+
+    def clearSaltoContinue(self):
+        self.saltoContinue = ''

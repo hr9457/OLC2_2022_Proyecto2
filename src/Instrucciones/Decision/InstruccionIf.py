@@ -7,6 +7,13 @@ from src.environment.Environment import Environment
 from src.Error.Error import Error
 
 
+
+# para traduccion en 3d
+from src.environment.Simbolo3d import Simbolo3d
+
+
+
+
 class InstruccionIf(Instruccion):
 
     def __init__(self, fila, columna, expresion, instruccionesIF=None, nodo=None):
@@ -289,9 +296,42 @@ class InstruccionIf(Instruccion):
 
 
 
+            #  traduce las instrucciones del if ---------
             # generacion de las instrucciones del if
             for instruccion in self.instruccionesIF:
+
+
                 instruccion.traducir(entorno, traductor3d, cadena)
+
+                # saber si hay un break
+                if isinstance(instruccion, Primitivo) and instruccion.tipo == TipoExpresion.BREAK:
+                    cadena_break = ''
+                    salto_break = traductor3d.getEtiqueta()
+                    traductor3d.aumentarEtiqueta()
+
+                    cadena_break += '\n'
+                    cadena_break += '/*-- BREAK --*/\n'
+                    cadena_break += f'goto L{salto_break};\n\n\n'
+                    traductor3d.addCadenaTemporal(cadena_break)
+                    traductor3d.addSaltoBreak(f'L{salto_break}:\n')
+
+
+                # saber si hay un continue
+                if isinstance(instruccion, Primitivo) and instruccion.tipo == TipoExpresion.CONTINUE:
+                    cadena_continue = ''
+                    salto_continue = traductor3d.getEtiqueta()
+                    traductor3d.aumentarEtiqueta()
+
+                    cadena_continue += '\n'
+                    cadena_continue += '/*-- CONTINUE --*/\n'
+                    cadena_continue += f'goto L{salto_continue};\n'
+                    traductor3d.addSaltoContinue(f'L{salto_continue}:\n')
+                    traductor3d.addCadenaTemporal(cadena_continue)
+
+                
+
+
+
 
             
             # salida del if si se llega a cumplir la condicionesw
@@ -321,12 +361,14 @@ class InstruccionIf(Instruccion):
 
                 # traduccion de las instrucciones del else\
                 self.nodo.traducir(entorno, traductor3d, cadena)
-
+                
 
 
 
             # salida del todo si entra al if
             traductor3d.addCadenaTemporal(f'L{salidaIf}:\n')
+
+
             
 
             return None
