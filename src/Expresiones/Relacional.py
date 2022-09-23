@@ -301,9 +301,10 @@ class Relacional(Expresion):
 
             traductor3d.addCadenaTemporal('\n')
             traductor3d.addCadenaTemporal('\n')
-            traductor3d.addCadenaTemporal(f't{temporal_actual} = stack[(int) {nodoIzquierdo.posicion}];\n')
+            
 
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
+            traductor3d.addCadenaTemporal(f't{temporal_actual} = stack[(int) {nodoIzquierdo.posicion}];\n')
             nodoIzquierdo.valor = f't{temporal_actual}'
 
 
@@ -370,7 +371,7 @@ class Relacional(Expresion):
 
 
 
-        elif self.operador == TipoRelacional.MENORQUE:
+        elif self.operador == TipoRelacional.MENORIGUALQUE:
             # cadenaTraduccion3d = ''
 
             cadenaTraduccion3d += f'{nodoIzquierdo.valor} <= {nodoDerecho.valor}'

@@ -267,8 +267,9 @@ class Declaracion(Instruccion):
 
             # agrega al entorno la variable
             resultado.posicion = traductor3d.getStack()
-            entorno.addVariable3d(self.identificador,resultado)
             traductor3d.aumentarStack()
+            entorno.addVariable3d(self.identificador,resultado)
+            
 
 
             # **********************************************

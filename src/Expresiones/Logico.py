@@ -268,6 +268,38 @@ class Logico(Expresion):
             # TRADUCCION PARA LA COMPUERTA AND
             elif self.operador == TipoLogico.AND:
 
+
+                if nodoIzquierdo.valor == 'true' or nodoIzquierdo.valor == 'false':
+                    cadenaTraduccion3d += '\n'
+                    cadenaTraduccion3d += '\n'                    
+                    cadenaTraduccion3d += '\n'
+                    cadenaTraduccion3d += '/*------- IF LOGICO-------- */\n'
+                    cadenaTraduccion3d += f'/*--- {nodoIzquierdo.valor} ---*/\n'
+                    etiquetaIf = traductor3d.getEtiqueta()
+                    traductor3d.aumentarEtiqueta()
+                    cadenaTraduccion3d += f'goto L{etiquetaIf};\n'
+                    cadenaTraduccion3d += f'L{etiquetaIf}:\n'
+                    traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+                    if nodoDerecho.tipo == TipoExpresion.BOOL or nodoIzquierdo.tipo == TipoExpresion.BOOL:
+                    # si los procesos logicos generaron etiquetas temporales de salida
+                    # para saltar al else
+                        traductor3d.addCadenaTemporal(traductor3d.getSaltosTemporales())
+                        traductor3d.clearSaltosTemporales()
+
+
+                    return Simbolo3d(
+                        self.fila,
+                        self.columna,
+                        None,
+                        TipoExpresion.BOOL,
+                        nodoDerecho.valor,
+                        None,
+                        0,
+                        0
+                    )
+
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
                 

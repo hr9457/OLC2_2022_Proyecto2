@@ -269,7 +269,9 @@ class Nativas(Instruccion):
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'/*-- NATIVA SQRT() --*/\n'
-            cadenaTraduccion3d += f't{termporal_actual} = sqrt({nodo3d.valor});\n\n'
+            cadenaTraduccion3d += f't{termporal_actual} = {nodo3d.valor};\n'
+            cadenaTraduccion3d += f't5 = t{termporal_actual};\n'
+            cadenaTraduccion3d += f'funcionSqrt();\n'
 
             # agregando traduccion
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
@@ -280,7 +282,7 @@ class Nativas(Instruccion):
                 self.columna,
                 None,
                 nodo3d.tipo,
-                f't{termporal_actual}',
+                f't6',
                 None,
                 0,
                 0

@@ -357,6 +357,12 @@ class InstruccionIf(Instruccion):
 
 
             # traduccion de las instrucciones del else
+            traductor3d.addCadenaTemporal(f'\n')
+            traductor3d.addCadenaTemporal(f'\n')
+            traductor3d.addCadenaTemporal(f'\n')
+            traductor3d.addCadenaTemporal(f'\n')
+            traductor3d.addCadenaTemporal(f'/*-- ELSE --*/\n')
+
             if self.nodo != None:
 
                 # traduccion de las instrucciones del else\
