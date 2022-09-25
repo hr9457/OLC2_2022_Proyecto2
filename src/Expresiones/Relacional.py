@@ -299,13 +299,13 @@ class Relacional(Expresion):
             temporal_actual = traductor3d.getTemporal()
             traductor3d.aumentarTemporal()
 
-            traductor3d.addCadenaTemporal('\n')
-            traductor3d.addCadenaTemporal('\n')
-            
-
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
+
+            traductor3d.addCadenaTemporal('\n')
+            traductor3d.addCadenaTemporal('\n')
             traductor3d.addCadenaTemporal(f't{temporal_actual} = stack[(int) {nodoIzquierdo.posicion}];\n')
             nodoIzquierdo.valor = f't{temporal_actual}'
+
 
 
         elif nodoIzquierdo.tipo != TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
@@ -316,17 +316,33 @@ class Relacional(Expresion):
 
 
 
+
+
+
+
+
         # COMPARACION DE TIPO DE REALCION
         if self.operador == TipoRelacional.MAYORQUE:
             # cadenaTraduccion3d = ''
             
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} > {nodoDerecho.valor}'
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} > {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,
@@ -337,68 +353,114 @@ class Relacional(Expresion):
 
         elif self.operador == TipoRelacional.MAYORIGUALQUE:
             # cadenaTraduccion3d = ''
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
 
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} >= {nodoDerecho.valor}'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} >= {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,
             )
+
 
 
 
 
         elif self.operador == TipoRelacional.MENORQUE:
             # cadenaTraduccion3d = ''
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
 
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} < {nodoDerecho.valor}'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} < {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,
             )
+
 
 
 
 
         elif self.operador == TipoRelacional.MENORIGUALQUE:
             # cadenaTraduccion3d = ''
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
 
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} <= {nodoDerecho.valor}'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} <= {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,
             )
+
+
 
 
 
 
         elif self.operador == TipoRelacional.IGUALDAD:
             # cadenaTraduccion3d = ''
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
 
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} == {nodoDerecho.valor}'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} == {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,
@@ -406,16 +468,29 @@ class Relacional(Expresion):
 
 
 
+
+
         elif self.operador == TipoRelacional.DIFERENTE:
             # cadenaTraduccion3d = ''
+            # temporal para guardar el resultado
+            temporal_actual = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
 
-            cadenaTraduccion3d += f'{nodoIzquierdo.valor} != {nodoDerecho.valor}'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*-- RELACIONAL --*/\n'
+            cadenaTraduccion3d += f't{temporal_actual} = {nodoIzquierdo.valor} != {nodoDerecho.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
             return Simbolo3d(
                 self.fila,
                 self.columna,
                 None,
-                None,
-                cadenaTraduccion3d,
+                TipoExpresion.BOOL,
+                f't{temporal_actual}',
                 None,
                 0,
                 0,

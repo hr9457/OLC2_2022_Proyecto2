@@ -301,7 +301,7 @@ class Declaracion(Instruccion):
 
         # menjo de variables tipo --> BOOL
         elif resultado.tipo == TipoExpresion.BOOL:
-            if resultado.valor == 'true':
+            if resultado.valor == '1':
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
                 cadenaTraduccion3d += f'stack[(int)P] = 1;\n'
@@ -321,7 +321,7 @@ class Declaracion(Instruccion):
                 #               TRADUCCION     
                 traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
-            elif resultado.valor == 'false':
+            elif resultado.valor == '0':
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
                 cadenaTraduccion3d += f'stack[(int)P] = 0;\n'

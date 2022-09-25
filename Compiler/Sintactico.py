@@ -1926,10 +1926,10 @@ def p_valor(p):
         p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.FLOAT, p[1])
     
     elif p.slice[1].type == 'TRUE':
-        p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.BOOL, p[1])
+        p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.BOOL, '1')
 
     elif p.slice[1].type == 'FALSE':
-        p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.BOOL, p[1])
+        p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.BOOL, '0')
 
     elif p.slice[1].type == 'CADENA':
         p[0] = Primitivo(p.lineno(1), columnToken(input, p.slice[1]), TipoExpresion.STRING, p[1])

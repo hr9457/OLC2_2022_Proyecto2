@@ -144,10 +144,10 @@ class InstruccionIf(Instruccion):
 
 
 
-        if expresion3d.valor == 'true' or expresion3d.valor == 'false':
+        if expresion3d.valor == '1' or expresion3d.valor == '0':
 
             
-            if expresion3d.valor == 'true':
+            if expresion3d.valor == '1':
                 # cuando la expresion sea if salta donde mismo
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '\n'
@@ -205,7 +205,7 @@ class InstruccionIf(Instruccion):
 
 
             #  cuando la expresion sea false
-            elif expresion3d.valor == 'false':
+            elif expresion3d.valor == '0':
                 # cuando la expresion sea if salta donde mismo
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '\n'
@@ -275,9 +275,11 @@ class InstruccionIf(Instruccion):
 
 
 
-        else:
+        else:            
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += traductor3d.getSaltoLogicoTrue()
+            traductor3d.clearSaltoLogicoTrue()
             cadenaTraduccion3d += '/*------- IF -------- */\n'
             etiquetaIf = traductor3d.getEtiqueta()
             cadenaTraduccion3d += f'if ( {expresion3d.valor} ) goto L{etiquetaIf};\n'

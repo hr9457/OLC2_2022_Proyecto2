@@ -1,3 +1,4 @@
+from functools import cached_property
 from src.Expresiones.Primitivo import Primitivo
 from src.Interfaces.Expresion import Expresion
 from src.Interfaces.TipoLogico import TipoLogico
@@ -133,10 +134,10 @@ class Logico(Expresion):
                     variable3d = entorno.getVariable3d(nodo.valor)
 
                     # cambio de valor
-                    if variable3d.valor == 'false':
-                        variable3d.valor = 'true'
-                    elif variable3d.valor == 'true':
-                        variable3d.valor = 'false'
+                    if variable3d.valor == '0':
+                        variable3d.valor = '1'
+                    elif variable3d.valor == '1':
+                        variable3d.valor = '0'
 
 
                     entorno.addVariable3d(nodo.valor,variable3d)
@@ -144,11 +145,13 @@ class Logico(Expresion):
 
 
                 else:
-                    if nodo.valor == 'true':
-                        nodo.valor = 'false'
-                    elif nodo.valor == 'false':
-                        nodo.valor = 'true'
+                    if nodo.valor == '1':
+                        nodo.valor = '0'
+                    elif nodo.valor == '0':
+                        nodo.valor = '1'
                     return nodo
+
+
 
 
 
@@ -177,79 +180,78 @@ class Logico(Expresion):
             if self.operador == TipoLogico.OR:
 
 
+                
+                # elementos para la compuerta OR
+                temporal_respuesta = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
 
 
-                if nodoIzquierdo.valor == 'true' or nodoIzquierdo.valor == 'false':
-                    cadenaTraduccion3d += '\n'
-                    cadenaTraduccion3d += '\n'                    
-                    cadenaTraduccion3d += '\n'
-                    cadenaTraduccion3d += '/*------- IF LOGICO-------- */\n'
-                    cadenaTraduccion3d += f'/*--- {nodoIzquierdo.valor} ---*/\n'
-                    etiquetaIf = traductor3d.getEtiqueta()
-                    traductor3d.aumentarEtiqueta()
-                    cadenaTraduccion3d += f'goto L{etiquetaIf};\n'
-                    cadenaTraduccion3d += f'L{etiquetaIf}:\n'
-                    traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+                # NODO IZQUIERDO
+                etiquetaIf = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
 
 
-                    if nodoDerecho.tipo == TipoExpresion.BOOL or nodoIzquierdo.tipo == TipoExpresion.BOOL:
-                    # si los procesos logicos generaron etiquetas temporales de salida
-                    # para saltar al else
-                        traductor3d.addCadenaTemporal(traductor3d.getSaltosTemporales())
-                        traductor3d.clearSaltosTemporales()
+                else_nodo_izquierdo = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
 
 
-                    return Simbolo3d(
-                        self.fila,
-                        self.columna,
-                        None,
-                        TipoExpresion.BOOL,
-                        nodoDerecho.valor,
-                        None,
-                        0,
-                        0
-                    )
-
-
-
-
-
+                salto_true_if = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
 
 
                 cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
-                
-                etiquetaIf = traductor3d.getEtiqueta()
-                cadenaTraduccion3d += f'if ( {nodoIzquierdo.valor} ) goto L{etiquetaIf};\n'
-                traductor3d.aumentarEtiqueta()
-
-                etiquetaElse = traductor3d.getEtiqueta()
-                cadenaTraduccion3d += f'goto L{etiquetaElse};\n'
-                traductor3d.aumentarEtiqueta()
+                cadenaTraduccion3d += f'if ( {nodoIzquierdo.valor} ) goto L{etiquetaIf};\n'  
+                cadenaTraduccion3d += f'goto L{else_nodo_izquierdo};\n'                
 
                 cadenaTraduccion3d += f'L{etiquetaIf}:\n'
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=1;\n'
+                cadenaTraduccion3d += f'    goto L{salto_true_if};\n'
+                cadenaTraduccion3d += f'L{else_nodo_izquierdo}:\n'
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=0;\n'
 
+
+                traductor3d.addSaltoLogicoTrue(f'L{salto_true_if}:\n')
+
+                
+                # NODO DERECHO
+                etiquetaIf = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
+                etiquetaElse = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
+                salto_true_if = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
+                cadenaTraduccion3d += f'if ( {nodoDerecho.valor} ) goto L{etiquetaIf};\n'
+                cadenaTraduccion3d += f'goto L{etiquetaElse};\n'
+
+                cadenaTraduccion3d += f'L{etiquetaIf}:\n'
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=1;\n'
+                cadenaTraduccion3d += f'    goto L{salto_true_if};\n'
+                cadenaTraduccion3d += f'L{etiquetaElse}:\n'
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=0;\n'
+
+                traductor3d.addSaltoLogicoTrue(f'L{salto_true_if}:\n')
+
+                
                 # se agrega a la traduccion general
                 traductor3d.addCadenaTemporal(cadenaTraduccion3d)
-
-
-                # agrego etiqueta Salida temporalmente
-                traductor3d.addSaltoTemporal(f'L{etiquetaElse}: \n')
-
-
-                if nodoDerecho.tipo == TipoExpresion.BOOL or nodoIzquierdo.tipo == TipoExpresion.BOOL:
-                    # si los procesos logicos generaron etiquetas temporales de salida
-                    # para saltar al else
-                    traductor3d.addCadenaTemporal(traductor3d.getSaltosTemporales())
-                    traductor3d.clearSaltosTemporales()
-
 
                 return Simbolo3d(
                     self.fila,
                     self.columna,
                     None,
                     TipoExpresion.BOOL,
-                    nodoDerecho.valor,
+                    f't{temporal_respuesta}',
                     None,
                     0,
                     0
@@ -265,68 +267,64 @@ class Logico(Expresion):
 
 
 
+
+
             # TRADUCCION PARA LA COMPUERTA AND
             elif self.operador == TipoLogico.AND:
 
 
-                if nodoIzquierdo.valor == 'true' or nodoIzquierdo.valor == 'false':
-                    cadenaTraduccion3d += '\n'
-                    cadenaTraduccion3d += '\n'                    
-                    cadenaTraduccion3d += '\n'
-                    cadenaTraduccion3d += '/*------- IF LOGICO-------- */\n'
-                    cadenaTraduccion3d += f'/*--- {nodoIzquierdo.valor} ---*/\n'
-                    etiquetaIf = traductor3d.getEtiqueta()
-                    traductor3d.aumentarEtiqueta()
-                    cadenaTraduccion3d += f'goto L{etiquetaIf};\n'
-                    cadenaTraduccion3d += f'L{etiquetaIf}:\n'
-                    traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+                # PARA COMPUERTA AND
 
-
-                    if nodoDerecho.tipo == TipoExpresion.BOOL or nodoIzquierdo.tipo == TipoExpresion.BOOL:
-                    # si los procesos logicos generaron etiquetas temporales de salida
-                    # para saltar al else
-                        traductor3d.addCadenaTemporal(traductor3d.getSaltosTemporales())
-                        traductor3d.clearSaltosTemporales()
-
-
-                    return Simbolo3d(
-                        self.fila,
-                        self.columna,
-                        None,
-                        TipoExpresion.BOOL,
-                        nodoDerecho.valor,
-                        None,
-                        0,
-                        0
-                    )
-
-                cadenaTraduccion3d += '\n'
-                cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
-                
+                # NODO IZQUIERDO
                 etiquetaIf = traductor3d.getEtiqueta()
-                cadenaTraduccion3d += f'if ( {nodoIzquierdo.valor} ) goto L{etiquetaIf};\n'
                 traductor3d.aumentarEtiqueta()
+
 
                 etiquetaElse = traductor3d.getEtiqueta()
-                cadenaTraduccion3d += f'goto L{etiquetaElse};\n'
                 traductor3d.aumentarEtiqueta()
 
+                temporal_respuesta = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
+                cadenaTraduccion3d += f'if ( {nodoIzquierdo.valor} ) goto L{etiquetaIf};\n'
+                cadenaTraduccion3d += f'goto L{etiquetaElse};\n'
                 cadenaTraduccion3d += f'L{etiquetaIf}:\n'
-
-                # se agrega a la traduccion general
-                traductor3d.addCadenaTemporal(cadenaTraduccion3d)
-
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=1;\n'
 
                 # agrego etiqueta Salida temporalmente
                 traductor3d.addSaltoTemporal(f'L{etiquetaElse}: \n')
 
 
-                if nodoDerecho.tipo == TipoExpresion.BOOL or nodoIzquierdo.tipo == TipoExpresion.BOOL:
-                    # si los procesos logicos generaron etiquetas temporales de salida
-                    # para saltar al else
-                    # traductor3d.addCadenaTemporal(traductor3d.getSaltosTemporales())
-                    # traductor3d.clearSaltosTemporales()
-                    pass
+
+                # NODO DERECHO
+                if_nodo_derecho = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+                else_nodo_derecho = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*------ IF LOGICO -------*/\n'
+                cadenaTraduccion3d += f'if ( {nodoDerecho.valor} ) goto  L{if_nodo_derecho};\n'
+                cadenaTraduccion3d += f'goto L{else_nodo_derecho};\n'
+                cadenaTraduccion3d += f'L{if_nodo_derecho}:\n'
+                cadenaTraduccion3d += f'    t{temporal_respuesta}=1;\n'
+
+
+                traductor3d.addSaltoTemporal(f'L{else_nodo_derecho}:\n')
+
+
+                # se agrega a la traduccion general
+                traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
 
 
                 return Simbolo3d(
@@ -334,7 +332,7 @@ class Logico(Expresion):
                     self.columna,
                     None,
                     TipoExpresion.BOOL,
-                    nodoDerecho.valor,
+                    f't{temporal_respuesta}',
                     None,
                     0,
                     0
