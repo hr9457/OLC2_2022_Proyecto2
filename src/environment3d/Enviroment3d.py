@@ -15,6 +15,7 @@ class Environment3d:
         self.saltoBreak = ''
         self.saltoContinue = ''
         self.saltoRetun = ''
+        self.satoLogicoTrue = ''
 
 
     
@@ -24,7 +25,6 @@ class Environment3d:
     def cabecera(self):
         self.traduccion += '/*------------- HEADER --------------*/\n' 
         self.traduccion += '# include <stdio.h>\n'
-        self.traduccion += '# include <math.h>\n'
         self.traduccion += '\n'
         self.traduccion += '\n'
 
@@ -275,8 +275,26 @@ class Environment3d:
 
 
 
+    # SALTO LOGICO TRUE
+    def getSaltoLogicoTrue(self):
+        return self.satoLogicoTrue
+
+
+    def addSaltoLogicoTrue(self, cadena):
+        self.satoLogicoTrue += cadena
+
+
+    def clearSaltoLogicoTrue(self):
+        self.satoLogicoTrue = ''
+
+
+
+
+
+
 
     # menajo de saltos
+    # BREAK
     def getSaltoBreak(self):
         return self.saltoBreak
 
@@ -290,7 +308,7 @@ class Environment3d:
 
 
     
-
+    # CONTINUE
     def getSaltoContinue(self):
         return self.saltoContinue
 

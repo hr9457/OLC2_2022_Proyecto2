@@ -281,7 +281,9 @@ class Imprimir(Instruccion):
         # si la impresion es simple 
         if self.lista == None:
             resultado = self.contenido.traducir(entorno, traductor3d, cadena)
-            cadenaTraduccion3d += self.impresionSimple(resultado, entorno, traductor3d, cadena) 
+            cadenaTraduccion3d += self.impresionSimple(resultado, entorno, traductor3d, cadena)
+            cadenaTraduccion3d += '//SALTO DE LINEA\n'  
+            cadenaTraduccion3d += 'printf("%c", (int)10);\n' 
             # *********************************************
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
             # *********************************************         
@@ -355,13 +357,13 @@ class Imprimir(Instruccion):
         # impresion de expresiones tipo  booleanos
         elif resultado.tipo == TipoExpresion.BOOL:
             
-            if resultado.valor == 'true':
+            if resultado.valor == '1':
                 # ************ traduccion ******************
                 cadenaTraduccion3d += self.imprimirTrue3d()
                 return cadenaTraduccion3d
                 # ******************************************
 
-            elif resultado.valor == 'false':
+            elif resultado.valor == '0':
                 # ************ traduccion ******************
                 cadenaTraduccion3d += self.imprimirFalse3d()
                 return cadenaTraduccion3d
@@ -444,12 +446,12 @@ class Imprimir(Instruccion):
 
             # variable es de tipo BOOL
             elif variable3d.tipo == TipoExpresion.BOOL:
-                if variable3d.valor == 'true':
+                if variable3d.valor == '1':
                     # ************ traduccion ******************
                     cadenaTraduccion3d += self.imprimirTrue3d()
                     # ******************************************
 
-                elif variable3d.valor == 'false':
+                elif variable3d.valor == '0':
                     # ************ traduccion ******************
                     cadenaTraduccion3d += self.imprimirFalse3d()
                     # ******************************************            
@@ -581,7 +583,10 @@ class Imprimir(Instruccion):
 
                     # IMPRESION DE LA EXPRESION SIMPLE
                     cadenaTraduccion3d += self.impresionSimple(expresion3d, entorno, traductor3d, cadena)
-                    
+
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '//SALTO DE LINEA\n'  
+            cadenaTraduccion3d += 'printf("%c", (int)10);\n'        
 
         # *********************************************
         return cadenaTraduccion3d
@@ -615,7 +620,7 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%d", (int){resultado}); \n'
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -628,7 +633,7 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%f", {resultado}); \n'
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -641,7 +646,7 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%c", (int){resultado}); \n'
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -656,7 +661,6 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += 'printf("%c", (int)114);\n'
         cadenaTraduccion3d += 'printf("%c", (int)117);\n'
         cadenaTraduccion3d += 'printf("%c", (int)101);\n'
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -673,7 +677,6 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += 'printf("%c", (int)101);\n'
         cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         cadenaTraduccion3d += 'printf("%c", (int)13);\n'
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -712,8 +715,10 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- IMPRESION DE UN STRING -----------*/\n'
         cadenaTraduccion3d += 'printString();\n'
-        cadenaTraduccion3d += '\n'  
-        cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        # cadenaTraduccion3d += '//SALTO DE LINEA'  
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
 
         return cadenaTraduccion3d           
         # ******************************************
