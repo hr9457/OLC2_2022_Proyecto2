@@ -372,6 +372,7 @@ class Declaracion(Instruccion):
             
             # agrega al entorno la variable
             resultado.posicion = posicionStackVariable
+            resultado.tamanio = len(resultado.valor)
             entorno.addVariable3d(self.identificador, resultado)
 
 

@@ -229,7 +229,15 @@ class Aritmetica(Expresion):
         # SI SOLO  EL NODO DERECHO ES UN ID
         elif nodoIzquierdo.tipo != TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
 
+            temporal_derecho = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
+
+            traductor3d.addCadenaTemporal('\n')
+            traductor3d.addCadenaTemporal('\n')
+            traductor3d.addCadenaTemporal(f't{temporal_derecho} = stack[(int) {nodoDerecho.posicion}];\n')
+            nodoDerecho.valor = f't{temporal_derecho}'
 
 
 
@@ -529,3 +537,151 @@ class Aritmetica(Expresion):
                         0
                     )
                     # *************************************
+
+
+
+
+
+
+
+
+
+
+            # evaluacion de tipo valor --> STRING
+            elif  nodoIzquierdo.tipo == TipoExpresion.STRING:
+                cadena3d = ''
+
+                # elementos necesario para concatenar
+                
+                # NODO IZQUIERDO 
+                temporal_nodo_izquierdo = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+                temporal_posicion_izquierdo = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                # NODO DERECHO
+                temporal_nodo_derecho = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+                temporal_posicion_derecho = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                temporal_contador = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                temporal_recolector = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                inicio_string = traductor3d.getHeap()
+                traductor3d.aumentarHeap()
+
+
+
+                # LARGO DE CADA UNO DE LOS ELEMENTOS
+                tamanio_ambos = nodoIzquierdo.tamanio + nodoDerecho.tamanio
+                print(f'----------------------------------------------------> {tamanio_ambos}')
+
+
+
+
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'/*---- CONCATENAR STRING ----*/\n'
+                cadena3d += f'\n'
+                cadena3d += f'//nodo Izquierdo\n'
+                cadena3d += f't{temporal_nodo_izquierdo} = stack[(int) {nodoIzquierdo.posicion}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'//TAMANIO DEL STRING\n'
+                cadena3d += f't{temporal_posicion_izquierdo} = heap[(int) t{temporal_nodo_izquierdo}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'//INICIO DEL STRING\n'
+                cadena3d += f't{temporal_nodo_izquierdo} = t{temporal_nodo_izquierdo} + 1;\n'
+                cadena3d += f'\n'
+
+
+                cadena3d += f'\n'
+                cadena3d += f'//nodo Derecho\n'
+                cadena3d += f't{temporal_nodo_derecho} = stack[(int) {nodoDerecho.posicion}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'//TAMANIO DEL STRING\n'
+                cadena3d += f't{temporal_posicion_derecho} = heap[(int) t{temporal_nodo_derecho}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'//INICIO DEL STRING\n'
+                cadena3d += f't{temporal_nodo_derecho} = t{temporal_nodo_derecho} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'heap[(int) H] = {tamanio_ambos};\n'
+                cadena3d += f'H = H + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+
+                # for para colocar el primer string
+                cadena3d += f'//PRIMERO NODO IZQUIERDO\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'//CONTADOR\n'
+                cadena3d += f't{temporal_contador} = 0;\n'
+                cadena3d += f'\n'
+                cadena3d += f'concatString:\n'
+                cadena3d += f'if ( t{temporal_contador} >= t{temporal_posicion_izquierdo} ) goto finConcatString;\n'
+                cadena3d += f't{temporal_recolector} = heap[(int) t{temporal_nodo_izquierdo}];\n'
+                cadena3d += f'heap[(int) H] = t{temporal_recolector};\n'
+                cadena3d += f'H = H + 1;\n'
+                traductor3d.aumentarHeap()
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_contador} =  t{temporal_contador} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_nodo_izquierdo} =  t{temporal_nodo_izquierdo} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'goto concatString;\n'
+                cadena3d += f'\n'
+                cadena3d += f'finConcatString:\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+
+
+                cadena3d += f'//SEGUNDO NODO DERECHO\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'//CONTADOR\n'
+                cadena3d += f't{temporal_contador} = 0;\n'
+                cadena3d += f'\n'
+                cadena3d += f'concatString2:\n'
+                cadena3d += f'if ( t{temporal_contador} >= t{temporal_posicion_derecho} ) goto finConcatString2;\n'
+                cadena3d += f't{temporal_recolector} = heap[(int) t{temporal_nodo_derecho}];\n'
+                cadena3d += f'heap[(int) H] = t{temporal_recolector};\n'
+                cadena3d += f'H = H + 1;\n'
+                traductor3d.aumentarHeap()
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_contador} = t{temporal_contador} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_nodo_derecho} = t{temporal_nodo_derecho} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'goto concatString2;\n'
+                cadena3d += f'\n'
+                cadena3d += f'finConcatString2:\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+
+
+
+                # ************* TRADUCCION
+                traductor3d.addCadenaTemporal(cadena3d)
+
+
+                return Simbolo3d(
+                        self.fila,
+                        self.columna,
+                        None,
+                        TipoExpresion.STRING,
+                        f'{inicio_string}',
+                        None,
+                        inicio_string,
+                        tamanio_ambos
+                    )

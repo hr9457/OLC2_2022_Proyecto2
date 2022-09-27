@@ -283,7 +283,10 @@ class Imprimir(Instruccion):
             resultado = self.contenido.traducir(entorno, traductor3d, cadena)
             cadenaTraduccion3d += self.impresionSimple(resultado, entorno, traductor3d, cadena)
             cadenaTraduccion3d += '//SALTO DE LINEA\n'  
-            cadenaTraduccion3d += 'printf("%c", (int)10);\n' 
+            cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n' 
             # *********************************************
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
             # *********************************************         
@@ -620,6 +623,9 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%d", (int){resultado}); \n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
         # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
@@ -633,6 +639,9 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%f", {resultado}); \n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
         # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
@@ -646,6 +655,9 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- PRINT ------------*/\n'
         cadenaTraduccion3d += f'printf("%c", (int){resultado}); \n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
         # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
@@ -661,6 +673,9 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += 'printf("%c", (int)114);\n'
         cadenaTraduccion3d += 'printf("%c", (int)117);\n'
         cadenaTraduccion3d += 'printf("%c", (int)101);\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -677,6 +692,9 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += 'printf("%c", (int)101);\n'
         cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         cadenaTraduccion3d += 'printf("%c", (int)13);\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
         return cadenaTraduccion3d
         # ******************************************
 
@@ -715,6 +733,7 @@ class Imprimir(Instruccion):
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- IMPRESION DE UN STRING -----------*/\n'
         cadenaTraduccion3d += 'printString();\n'
+        cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '\n'
         # cadenaTraduccion3d += '//SALTO DE LINEA'  

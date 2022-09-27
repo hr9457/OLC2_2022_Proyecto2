@@ -129,6 +129,8 @@ class Environment3d:
         self.traduccion += '/*------------- INICIO -----------------*/\n'
         self.traduccion += '\n'
         self.traduccion += 'void main(){\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
         self.traduccion += '/*----  PUNTEROS ------*/\n'
         self.traduccion += '    P = 0;\n'
         self.traduccion += '    H = 0;\n'

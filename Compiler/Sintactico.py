@@ -984,6 +984,24 @@ def p_variables_mut(p):
 
 
 
+# no mutables
+def p_variables_tipo(p):
+    #     0              1   2   3        4     5    6    7 
+    '''  variable   :   LET ID DOSPUNTOS tipo IGUAL exp PUNTOCOMA  '''
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], p[4], p[6], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
+
+
+
+
+
+
+def p_variables(p):
+    #     0              1  2  3      4     5       
+    '''  variable   :   LET ID IGUAL exp PUNTOCOMA  '''
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], None, p[4], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
+
+
+
 
 
 
@@ -1102,22 +1120,6 @@ def p_variable_mut_sintipo_vec(p):
 
 
 # ---------------------- ** -------------------------
-# no mutables
-def p_variables_tipo(p):
-    #     0              1   2   3        4     5    6    7 
-    '''  variable   :   LET ID DOSPUNTOS tipo IGUAL exp PUNTOCOMA  '''
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], p[4], p[6], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
-
-
-
-
-
-
-def p_variables(p):
-    #     0              1  2  3      4     5       
-    '''  variable   :   LET ID IGUAL exp PUNTOCOMA  '''
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], None, p[4], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
-
 
 
 

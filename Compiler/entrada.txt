@@ -883,7 +883,56 @@ Se debió imprimir
 
 fn main() {
     
-    println!("primero");
-    println!("segundo");
+    for i in 0..3 {
+
+        println!("hola");
+
+        for j in 0..(5 - i) {
+            println!(3);
+        }
+
+    }
+
+}
+
+
+
+
+fn main() {
+    
+    let uno = "hola ";
+    let dos = "mundo";
+
+    uno = uno + dos;
+
+    println!(uno);
+
+}
+
+
+
+
+
+fn main() {
+    
+    let uno = "";
+
+    uno = uno + "*".to_string();
+
+    println!(uno);
+
+}
+
+
+
+
+
+fn main() {
+    
+    let uno = "hola ";
+
+    uno = uno + "mundo";
+
+    println!(uno);
 
 }
