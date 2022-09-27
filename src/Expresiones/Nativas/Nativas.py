@@ -111,8 +111,6 @@ class Nativas(Instruccion):
 
 
 
-        
-
         # NATIVA TOSTRING
         if self.tipo == TipoNativas.TOSTRING:
             
@@ -126,7 +124,7 @@ class Nativas(Instruccion):
                 nodo3d.valor,
                 None,
                 0,
-                0
+                nodo3d.tamanio
             )
 
 

@@ -915,9 +915,9 @@ fn main() {
 
 fn main() {
     
-    let uno = "";
+    let uno = "** ";
 
-    uno = uno + "*".to_string();
+    uno = uno + "hola".to_string();
 
     println!(uno);
 
@@ -936,3 +936,46 @@ fn main() {
     println!(uno);
 
 }
+
+
+
+
+fn main() {
+
+    for i in 0..9 {
+
+        let mut output: String = "".to_string();
+        for j in 0..(10 - i) {
+            output = output + " ".to_string();
+        }
+
+        for k in 0..i {
+            output = output + "* ".to_string();
+        }
+        println!(output);
+
+    }
+
+}
+
+
+
+
+fn main() {
+
+    for i in 0..9 {
+        
+
+        for k in 0..i {
+            println!(k);
+        }
+        
+
+    }
+
+}
+
+
+
+
+

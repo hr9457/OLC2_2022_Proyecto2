@@ -1,3 +1,4 @@
+from typing import final
 from src.Interfaces.Instruccion import Instruccion
 from src.environment.Environment import Environment
 from src.Expresiones.Primitivo import Primitivo
@@ -187,12 +188,35 @@ class Forin(Instruccion):
 
         # expInicio
         inicio_for = self.inicio.traducir(entorno, traductor3d, cadena)
+        if inicio_for.tipo == TipoExpresion.ID:
+
+            temporal_variable_inicio = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_variable_inicio} = stack[(int) {inicio_for.posicion}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            inicio_for = envFor.getVariable3d(inicio_for.valor)
+            inicio_for.valor = f't{temporal_variable_inicio}'
+
         temporal_inicio = traductor3d.getTemporal()
         traductor3d.aumentarTemporal()
 
 
         # expFinal
-        final_for = self.final.traducir(entorno, traductor3d, cadena) 
+        final_for = self.final.traducir(entorno, traductor3d, cadena)
+        if final_for.tipo == TipoExpresion.ID:
+            
+            temporal_variable_fin = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_variable_fin} = stack[(int) {final_for.posicion}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            final_for = envFor.getVariable3d(final_for.valor)
+            final_for.valor = f't{temporal_variable_fin}' 
+
         temporal_final = traductor3d.getTemporal()
         traductor3d.aumentarTemporal()
 
@@ -215,8 +239,9 @@ class Forin(Instruccion):
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f'\n'
-        cadenaTraduccion3d += f'/*------ FOR IN ------*/\n'
+        cadenaTraduccion3d += f'/*-------- FOR IN --------*/\n'
         cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'//CONTADORES DEL FOR IN \n'
         cadenaTraduccion3d += f't{temporal_inicio} = {inicio_for.valor};\n'
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f't{temporal_final} = {final_for.valor};\n'

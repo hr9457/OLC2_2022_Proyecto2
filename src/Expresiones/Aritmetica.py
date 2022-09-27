@@ -549,42 +549,25 @@ class Aritmetica(Expresion):
 
             # evaluacion de tipo valor --> STRING
             elif  nodoIzquierdo.tipo == TipoExpresion.STRING:
+
+
+                # ndodo derecho como nodo izquierdo .valor = "" que quiero
+
                 cadena3d = ''
-
-                # elementos necesario para concatenar
-                
-                # NODO IZQUIERDO 
-                temporal_nodo_izquierdo = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-                temporal_posicion_izquierdo = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-
-                # NODO DERECHO
-                temporal_nodo_derecho = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-                temporal_posicion_derecho = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-
-                temporal_contador = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-
-                temporal_recolector = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-
-                inicio_string = traductor3d.getHeap()
-                traductor3d.aumentarHeap()
 
 
 
                 # LARGO DE CADA UNO DE LOS ELEMENTOS
                 tamanio_ambos = nodoIzquierdo.tamanio + nodoDerecho.tamanio
-                print(f'----------------------------------------------------> {tamanio_ambos}')
+
+                inicio_string = traductor3d.getHeap()
 
 
+                temporal_tamanio_string = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                temporal_aux_heap = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
 
 
                 cadena3d += f'\n'
@@ -592,80 +575,41 @@ class Aritmetica(Expresion):
                 cadena3d += f'\n'
                 cadena3d += f'/*---- CONCATENAR STRING ----*/\n'
                 cadena3d += f'\n'
-                cadena3d += f'//nodo Izquierdo\n'
-                cadena3d += f't{temporal_nodo_izquierdo} = stack[(int) {nodoIzquierdo.posicion}];\n'
                 cadena3d += f'\n'
                 cadena3d += f'//TAMANIO DEL STRING\n'
-                cadena3d += f't{temporal_posicion_izquierdo} = heap[(int) t{temporal_nodo_izquierdo}];\n'
-                cadena3d += f'\n'
-                cadena3d += f'//INICIO DEL STRING\n'
-                cadena3d += f't{temporal_nodo_izquierdo} = t{temporal_nodo_izquierdo} + 1;\n'
-                cadena3d += f'\n'
-
-
-                cadena3d += f'\n'
-                cadena3d += f'//nodo Derecho\n'
-                cadena3d += f't{temporal_nodo_derecho} = stack[(int) {nodoDerecho.posicion}];\n'
-                cadena3d += f'\n'
-                cadena3d += f'//TAMANIO DEL STRING\n'
-                cadena3d += f't{temporal_posicion_derecho} = heap[(int) t{temporal_nodo_derecho}];\n'
-                cadena3d += f'\n'
-                cadena3d += f'//INICIO DEL STRING\n'
-                cadena3d += f't{temporal_nodo_derecho} = t{temporal_nodo_derecho} + 1;\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
+                cadena3d += f't{temporal_tamanio_string} = 0;\n'
+                cadena3d += f't{temporal_aux_heap} = H;\n'
                 cadena3d += f'\n'
-                cadena3d += f'heap[(int) H] = {tamanio_ambos};\n'
-                cadena3d += f'H = H + 1;\n'
-                cadena3d += f'\n'
-                cadena3d += f'\n'
-
-                # for para colocar el primer string
-                cadena3d += f'//PRIMERO NODO IZQUIERDO\n'
-                cadena3d += f'\n'
-                cadena3d += f'\n'
-                cadena3d += f'//CONTADOR\n'
-                cadena3d += f't{temporal_contador} = 0;\n'
-                cadena3d += f'\n'
-                cadena3d += f'concatString:\n'
-                cadena3d += f'if ( t{temporal_contador} >= t{temporal_posicion_izquierdo} ) goto finConcatString;\n'
-                cadena3d += f't{temporal_recolector} = heap[(int) t{temporal_nodo_izquierdo}];\n'
-                cadena3d += f'heap[(int) H] = t{temporal_recolector};\n'
+                cadena3d += f'heap[(int)H] = 0;\n'
                 cadena3d += f'H = H + 1;\n'
                 traductor3d.aumentarHeap()
                 cadena3d += f'\n'
-                cadena3d += f't{temporal_contador} =  t{temporal_contador} + 1;\n'
-                cadena3d += f'\n'
-                cadena3d += f't{temporal_nodo_izquierdo} =  t{temporal_nodo_izquierdo} + 1;\n'
-                cadena3d += f'\n'
-                cadena3d += f'goto concatString;\n'
-                cadena3d += f'\n'
-                cadena3d += f'finConcatString:\n'
-                cadena3d += f'\n'
-                cadena3d += f'\n'
                 cadena3d += f'\n'
 
+                # for para recorrer los valores de los string
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'//NODO IZQUIERDO\n'
+                for letra in nodoIzquierdo.valor:
+                    cadena3d += f'heap[(int)H] = {ord(letra)};\n'
+                    cadena3d += f'H = H + 1;\n'
+                    traductor3d.aumentarHeap()
+                    cadena3d += f'\n'
+                    cadena3d += f'\n'
+                    
 
-                cadena3d += f'//SEGUNDO NODO DERECHO\n'
+                # for para recorrer los valores de los string
                 cadena3d += f'\n'
                 cadena3d += f'\n'
-                cadena3d += f'//CONTADOR\n'
-                cadena3d += f't{temporal_contador} = 0;\n'
+                cadena3d += f'//NODO DERECHO\n'
+                for letra in nodoDerecho.valor:
+                    cadena3d += f'heap[(int)H] = {ord(letra)};\n'
+                    cadena3d += f'H = H + 1;\n'
+                    traductor3d.aumentarHeap()
+
                 cadena3d += f'\n'
-                cadena3d += f'concatString2:\n'
-                cadena3d += f'if ( t{temporal_contador} >= t{temporal_posicion_derecho} ) goto finConcatString2;\n'
-                cadena3d += f't{temporal_recolector} = heap[(int) t{temporal_nodo_derecho}];\n'
-                cadena3d += f'heap[(int) H] = t{temporal_recolector};\n'
-                cadena3d += f'H = H + 1;\n'
-                traductor3d.aumentarHeap()
-                cadena3d += f'\n'
-                cadena3d += f't{temporal_contador} = t{temporal_contador} + 1;\n'
-                cadena3d += f'\n'
-                cadena3d += f't{temporal_nodo_derecho} = t{temporal_nodo_derecho} + 1;\n'
-                cadena3d += f'\n'
-                cadena3d += f'goto concatString2;\n'
-                cadena3d += f'\n'
-                cadena3d += f'finConcatString2:\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
 

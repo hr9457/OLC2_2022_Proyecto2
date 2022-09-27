@@ -1,5 +1,6 @@
 # importacion de para Expresiones
 from src.Interfaces.Expresion import Expresion
+from src.Interfaces.TipoExpresion import TipoExpresion
 
 # importaciones para manejar simbolos
 from src.environment.Simbolo import Simbolo
@@ -35,13 +36,27 @@ class Primitivo(Expresion):
 
     # retorno para traduccion en 3d
     def traducir(self, entorno, traductor3d, cadena):
-        return Simbolo3d(
-            self.fila,
-            self.columna,
-            None,
-            self.tipo,
-            self.valor,
-            None,
-            0,
-            0
-        )
+
+        if self.tipo == TipoExpresion.STRING:
+            return Simbolo3d(
+                self.fila,
+                self.columna,
+                None,
+                self.tipo,
+                self.valor,
+                None,
+                0,
+                len(self.valor)
+            )
+        
+        else:
+            return Simbolo3d(
+                self.fila,
+                self.columna,
+                None,
+                self.tipo,
+                self.valor,
+                None,
+                0,
+                0
+            )
