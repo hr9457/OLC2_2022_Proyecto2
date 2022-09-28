@@ -563,13 +563,6 @@ class Aritmetica(Expresion):
                 inicio_string = traductor3d.getHeap()
 
 
-                temporal_tamanio_string = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-                temporal_aux_heap = traductor3d.getTemporal()
-                traductor3d.aumentarTemporal()
-
-
                 cadena3d += f'\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
@@ -579,10 +572,8 @@ class Aritmetica(Expresion):
                 cadena3d += f'//TAMANIO DEL STRING\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
-                cadena3d += f't{temporal_tamanio_string} = 0;\n'
-                cadena3d += f't{temporal_aux_heap} = H;\n'
                 cadena3d += f'\n'
-                cadena3d += f'heap[(int)H] = 0;\n'
+                cadena3d += f'heap[(int)H] = {tamanio_ambos};\n'
                 cadena3d += f'H = H + 1;\n'
                 traductor3d.aumentarHeap()
                 cadena3d += f'\n'
@@ -596,8 +587,6 @@ class Aritmetica(Expresion):
                     cadena3d += f'heap[(int)H] = {ord(letra)};\n'
                     cadena3d += f'H = H + 1;\n'
                     traductor3d.aumentarHeap()
-                    cadena3d += f'\n'
-                    cadena3d += f'\n'
                     
 
                 # for para recorrer los valores de los string
