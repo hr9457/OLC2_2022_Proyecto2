@@ -172,8 +172,10 @@ class While(Instruccion):
         traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
         
-        # PARA MANEJO DEL SALIDA BREAK:
-        # instruccion de quiebre
+
+
+        #            PARA MANEJO DEL SALIDA BREAK:
+        #               instruccion de quiebre
         traductor3d.addCadenaTemporal(traductor3d.getSaltoBreak())
         traductor3d.clearSaltoBreak()
         traductor3d.clearSaltoContinue()

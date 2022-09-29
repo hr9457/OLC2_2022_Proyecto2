@@ -997,3 +997,16 @@ fn main() {
 
 
 
+
+
+fn main(){
+    let mut varx = 0;
+    loop{
+        println!(varx);
+        if varx == 5{
+            break;
+        }
+        varx = varx + 1;
+    }
+}
+

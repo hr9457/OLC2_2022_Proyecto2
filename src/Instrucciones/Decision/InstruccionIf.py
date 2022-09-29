@@ -315,6 +315,8 @@ class InstruccionIf(Instruccion):
 
                 instruccion.traducir(entorno, traductor3d, cadena)
 
+
+                
                 # saber si hay un break
                 if isinstance(instruccion, Primitivo) and instruccion.tipo == TipoExpresion.BREAK:
                     cadena_break = ''
