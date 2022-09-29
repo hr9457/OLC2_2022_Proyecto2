@@ -553,41 +553,110 @@ class Aritmetica(Expresion):
 
                 # ndodo derecho como nodo izquierdo .valor = "" que quiero
 
+
+                temporal_heap = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                temporal_tamanio_string = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                inicio_string = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                tamanio_string = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                temporal_aux = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                contador1 = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                contador2 = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+
+                etiquetaSalida = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
+                temporal_aux2 = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+        
+
+                etiqueta_pivote = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+
                 cadena3d = ''
-
-
-
-                # LARGO DE CADA UNO DE LOS ELEMENTOS
-                tamanio_ambos = nodoIzquierdo.tamanio + nodoDerecho.tamanio
-
-                inicio_string = traductor3d.getHeap()
-
-
                 cadena3d += f'\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
-                cadena3d += f'/*---- CONCATENAR STRING ----*/\n'
+                cadena3d += f'\n'
+                cadena3d += f'/*--------- CONCATENAR STRING ------------*/\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
                 cadena3d += f'//TAMANIO DEL STRING\n'
                 cadena3d += f'\n'
                 cadena3d += f'\n'
+                cadena3d += f't{temporal_tamanio_string} = 0;\n'
+                cadena3d += f't{temporal_heap} = H;\n'
                 cadena3d += f'\n'
-                cadena3d += f'heap[(int)H] = {tamanio_ambos};\n'
+                cadena3d += f'heap[(int)H] = 0;\n'
                 cadena3d += f'H = H + 1;\n'
                 traductor3d.aumentarHeap()
                 cadena3d += f'\n'
                 cadena3d += f'\n'
 
+
+
+
                 # for para recorrer los valores de los string
                 cadena3d += f'\n'
                 cadena3d += f'\n'
                 cadena3d += f'//NODO IZQUIERDO\n'
-                for letra in nodoIzquierdo.valor:
-                    cadena3d += f'heap[(int)H] = {ord(letra)};\n'
-                    cadena3d += f'H = H + 1;\n'
-                    traductor3d.aumentarHeap()
+                cadena3d += f'\n'
+                cadena3d += f'//TAMANIO DEL STRING VIEJO\n'
+                cadena3d += f't{temporal_aux} = stack[(int) {nodoIzquierdo.posicion}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f't{contador2} = heap[(int) t{temporal_aux}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'//INICO DEL STRING\n'
+                cadena3d += f't{temporal_aux} = t{temporal_aux} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f't{contador1} = 0;\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'L{etiqueta_pivote}:\n'
+                cadena3d += f'if ( t{contador1} >= t{contador2} ) goto L{etiquetaSalida};\n'
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_aux2} = heap[(int) t{temporal_aux}];\n'
+                cadena3d += f'\n'
+                cadena3d += f'heap[(int) H] = t{temporal_aux2};\n'
+                cadena3d += f'H = H + 1;\n'
+                traductor3d.aumentarHeap()
+                cadena3d += f'\n'
+                cadena3d += f't{contador1} = t{contador1} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f't{temporal_aux} = t{temporal_aux} + 1;\n' 
+                cadena3d += f'\n'
+                cadena3d += f'//MENEJO DEL TAMANIO DEL STRING\n'
+                cadena3d += f't{temporal_tamanio_string} = t{temporal_tamanio_string} + 1;\n'
+                cadena3d += f'\n'
+                cadena3d += f'goto L{etiqueta_pivote};\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'L{etiquetaSalida}:\n'
                     
+
+
+
 
                 # for para recorrer los valores de los string
                 cadena3d += f'\n'
@@ -597,11 +666,22 @@ class Aritmetica(Expresion):
                     cadena3d += f'heap[(int)H] = {ord(letra)};\n'
                     cadena3d += f'H = H + 1;\n'
                     traductor3d.aumentarHeap()
+                    cadena3d += f'\n'
+                    cadena3d += f'//MANEJO DEL TAMANIO DEL STRING\n'
+                    cadena3d += f't{temporal_tamanio_string} = t{temporal_tamanio_string} + 1;\n'
 
                 cadena3d += f'\n'
                 cadena3d += f'\n'
+                cadena3d += f'//GUARDO EL TAMANIO DLE NUEVO STRING\n'
+                cadena3d += f'heap[(int) t{temporal_heap}] = t{temporal_tamanio_string};\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
+                cadena3d += f'\n'
                 cadena3d += f'\n'
 
+
+                # nodo derecho
 
 
                 # ************* TRADUCCION
@@ -613,8 +693,8 @@ class Aritmetica(Expresion):
                         self.columna,
                         None,
                         TipoExpresion.STRING,
-                        f'{inicio_string}',
+                        f't{temporal_heap}',
                         None,
-                        inicio_string,
-                        tamanio_ambos
+                        0,
+                        0
                     )

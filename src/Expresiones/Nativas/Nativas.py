@@ -110,7 +110,7 @@ class Nativas(Instruccion):
         nodo3d = self.nodo.traducir(entorno, traductor3d, cadena)
 
 
-
+        
         # NATIVA TOSTRING
         if self.tipo == TipoNativas.TOSTRING:
             
