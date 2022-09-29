@@ -206,7 +206,7 @@ class Environment:
         # buscar en el etorno anterior
         if self.prev != None:
             print('buscando en el entorno anterior')
-            return self.prev.getVariable(id)
+            return self.prev.getVariable3d(id)
 
 
         # print(key)

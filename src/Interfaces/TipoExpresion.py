@@ -13,3 +13,4 @@ class TipoExpresion(Enum):
     STRUCT      = 11
     ARREGLO     = 12
     VECTOR      = 13
+    TOSTRING    = 14
