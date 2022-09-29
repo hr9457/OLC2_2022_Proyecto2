@@ -140,6 +140,12 @@ class InstruccionIf(Instruccion):
         cadenaTraduccion3d = ''
 
 
+        # creacion de un nuevo entrono para el manejo del if
+        numeroEntorno = entorno.numero + 1
+        envIf = Environment('IF', numeroEntorno, entorno)
+
+
+
         expresion3d = self.expresion.traducir(entorno, traductor3d, cadena)
 
 
@@ -164,7 +170,7 @@ class InstruccionIf(Instruccion):
 
                 # generacion de las instrucciones del if
                 for instruccion in self.instruccionesIF:
-                    instruccion.traducir(entorno, traductor3d, cadena)
+                    instruccion.traducir(envIf, traductor3d, cadena)
 
 
                 # salida del if si se llega a cumplir la condicionesw
@@ -192,7 +198,7 @@ class InstruccionIf(Instruccion):
                     cadenaTraduccion3d += f'L{etiquetaElse}:\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
-                    self.nodo.traducir(entorno, traductor3d, cadena)
+                    self.nodo.traducir(envIf, traductor3d, cadena)
 
                 
                 # salida del todo si entra al if
@@ -252,7 +258,11 @@ class InstruccionIf(Instruccion):
                     cadenaTraduccion3d += f'L{etiquetaElse}:\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
-                    self.nodo.traducir(entorno, traductor3d, cadena)
+                    # creacion de un nuevo entrono para el manejo de else y else if
+                    numeroEntorno = entorno.numero + 1
+                    envElse = Environment('ELSE/ELSE IF', numeroEntorno, entorno)
+
+                    self.nodo.traducir(envElse, traductor3d, cadena)
 
                 
                 # salida del todo si entra al if

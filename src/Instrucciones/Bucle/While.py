@@ -100,6 +100,11 @@ class While(Instruccion):
     # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
         
+        # creacion de un nuevo entrono para el while
+        numeroEntorno = entorno.numero + 1
+        envWhile = Environment('WHILE', numeroEntorno, entorno)
+
+
         # traduccion a 3d
         cadenaTraduccion3d = ''
 
@@ -146,7 +151,7 @@ class While(Instruccion):
         # instrucciones del if
         for instruccion in self.nodo:
 
-            instruccion.traducir(entorno, traductor3d, cadena)	
+            instruccion.traducir(envWhile, traductor3d, cadena)	
 
 
         cadenaTraduccion3d += f'\n'
