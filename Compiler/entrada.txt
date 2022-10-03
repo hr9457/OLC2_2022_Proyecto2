@@ -899,18 +899,6 @@ fn main() {
 
 
 
-fn main() {
-    
-    let uno = "hola ";
-    let dos = "mundo";
-
-    uno = uno + dos;
-
-    println!(uno);
-
-}
-
-
 
 
 
@@ -926,17 +914,6 @@ fn main() {
 
 
 
-
-
-fn main() {
-    
-    let uno = "hola ";
-
-    uno = uno + "mundo";
-
-    println!(uno);
-
-}
 
 
 
@@ -962,41 +939,6 @@ fn main() {
 
 
 
-fn main() {
-
-
-    for i in 0..9 {
-
-        let mut output: String = "1".to_string();
-
-        for j in 0..(10 - i) {
-            output = output + "2".to_string();
-        }
-
-        println!(output);
-
-    }
-
-}
-
-
-
-
-
-fn main() {
-    
-    let mut output: String = "1".to_string();
-
-
-    let mut output: String = "2".to_string();
-
-
-    println!(output);
-
-}
-
-
-
 
 
 fn main(){
@@ -1010,3 +952,41 @@ fn main(){
     }
 }
 
+
+
+
+
+
+
+fn aritmetica(){
+    let val11 = 10 - (5 + 10 * (9 + 4 * (1 + 2 * 3)) - 8 * 3 * 6) + 5 * (2 * 2);
+    println!(val11);
+}
+
+
+fn saludo2(){
+    println!("hola2");
+}
+
+
+
+fn main(){
+    println!("main");
+    saludo2();
+}
+
+
+
+
+
+fn aritmetica(){
+    let val11 = 10 - (5 + 10 * (9 + 4 * (1 + 2 * 3)) - 8 * 3 * 6) + 5 * (2 * 2);
+    println!(val11);
+}
+
+
+
+fn main(){
+    let a = 3;
+    aritmetica();
+}

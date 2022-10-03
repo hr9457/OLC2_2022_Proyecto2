@@ -10,6 +10,7 @@ class Environment3d:
         self.punteroHeap = 0
         self.traduccion = ''
         self.contenidoMain = '' 
+        self.contendioFuncion = ''
         self.cadenaTemporal = ''
         self.saltosTemporales = ''
         self.saltoBreak = ''
@@ -122,10 +123,17 @@ class Environment3d:
         self.traduccion += '\n'
         self.traduccion += '\n'
         self.traduccion += '\n'
+        self.traduccion += '/*------------- FUNCIONES -----------------*/\n'
+        self.traduccion += '\n'
+        self.traduccion += f'{self.contendioFuncion}\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
 
 
 
-
+        self.traduccion += '\n'
+        self.traduccion += '\n'
         self.traduccion += '/*------------- INICIO -----------------*/\n'
         self.traduccion += '\n'
         self.traduccion += 'void main(){\n'
@@ -146,7 +154,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # metodo para obtener la cadena de la traduccion
     def getCadena(self):
         return self.traduccion
@@ -162,8 +170,8 @@ class Environment3d:
 
 
 
-
-    # contenido
+    # *********************************************
+    # contenido Funcion Main
     def getContenidoMain(self):
         return self.contenidoMain
 
@@ -177,6 +185,29 @@ class Environment3d:
 
 
 
+    # *********************************************
+    # contendio Funciones 
+    def getContenidoFuncion(self):
+        return self.contendioFuncion
+
+
+    
+    def setContenidoFuncion(self, cadena):
+        self.contendioFuncion += cadena
+
+
+    
+    def clearContenidoFuncion(self):
+        self.contendioFuncion = ''
+
+
+
+
+
+
+
+
+    # *********************************************
     # metodo para aumentar el numero del temporal
     def aumentarTemporal(self):
         self.temporal += 1
@@ -191,7 +222,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # metodo para aumetar el numero de las etiquetas
     def aumentarEtiqueta(self):
         self.etiqueta += 1
@@ -208,7 +239,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # metodo para manejar el valor de los puntero
     def aumentarStack(self):
         self.punteroStack += 1
@@ -223,7 +254,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # para menejo del puntero del heap
     def aumentarHeap(self):
         self.punteroHeap += 1
@@ -238,7 +269,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # cadena de concatenacion temporal
     def getCadenaTemporal(self):
         return self.cadenaTemporal
@@ -257,7 +288,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # cadena para manejar saltos temporales 
     def getSaltosTemporales(self):
         return self.saltosTemporales
@@ -276,7 +307,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # SALTO LOGICO TRUE
     def getSaltoLogicoTrue(self):
         return self.satoLogicoTrue
@@ -294,7 +325,7 @@ class Environment3d:
 
 
 
-
+    # *********************************************
     # menajo de saltos
     # BREAK
     def getSaltoBreak(self):
@@ -309,7 +340,9 @@ class Environment3d:
         self.saltoBreak = ''
 
 
-    
+
+
+    # *********************************************
     # CONTINUE
     def getSaltoContinue(self):
         return self.saltoContinue
@@ -321,3 +354,14 @@ class Environment3d:
 
     def clearSaltoContinue(self):
         self.saltoContinue = ''
+
+
+
+
+
+
+
+
+
+
+    

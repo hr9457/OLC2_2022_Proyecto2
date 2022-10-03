@@ -176,3 +176,46 @@ class GetFuncion(Instruccion):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def traducir(self, entorno, traductor3d, cadena):
+
+
+        cadena3d = ''
+
+
+
+
+
+        
+        cadena3d += f'\n'
+        cadena3d += f'\n'
+        cadena3d += f'/*----- LLAMADO A UNA FUNCION -------*/\n'
+        cadena3d += f'{self.identificador}();\n'
+        cadena3d += f'\n'
+        cadena3d += f'\n'
+
+
+        traductor3d.addCadenaTemporal(cadena3d)
+
+
+        return None
+
+
+

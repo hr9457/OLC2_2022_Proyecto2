@@ -14,6 +14,7 @@ class Environment:
         self.variables = {}
         self.variables3d = {}
         self.funciones = {}
+        self.funciones3d = {}
         self.structs = {}
         self.prev = prev
         self.next = None
@@ -165,7 +166,10 @@ class Environment:
     # ---------------------------------------------
     #            MANEJO DE 3D
     # ---------------------------------------------
+
+    # *********************************************
     #  metodo para agregar variables
+    # *********************************************
     def addVariable3d(self, id ,nuevaVariable):
 
         self.variables3d.update({id: nuevaVariable})
@@ -213,3 +217,29 @@ class Environment:
         print('variable no encontrada')
         return -1
         # return Error('variable no encontrada')
+
+
+
+
+
+
+    # *********************************************
+    #               FUNCIONES EN 3D    
+    # *********************************************
+    def addFuncion3D(self, id, funcion):
+        self.funciones.update({id:funcion})
+        print('funcion agregada')
+
+
+
+
+    def getFuncion3D(self, id):
+        for key in self.funciones.keys():
+            if key == id:
+                return self.funciones[key]
+
+
+        if self.prev != None:
+            return self.prev.getFuncion3D(id)
+
+        return -1
