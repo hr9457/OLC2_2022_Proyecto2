@@ -828,6 +828,22 @@ fn main() {
 
 
 
+        for i in 0..9 {
+
+        let mut output: String = "".to_string();
+        for j in 0..(10 - i) {
+            output = output + " ".to_string();
+        }
+
+        for k in 0..i {
+            output = output + "* ".to_string();
+        }
+        println!(output);
+
+    }
+
+
+
 }
 
 
@@ -965,7 +981,8 @@ fn aritmetica(){
 
 
 fn saludo2(){
-    println!("hola2");
+    let s = "hola2";
+    println!(s);
 }
 
 
@@ -973,20 +990,7 @@ fn saludo2(){
 fn main(){
     println!("main");
     saludo2();
-}
-
-
-
-
-
-fn aritmetica(){
-    let val11 = 10 - (5 + 10 * (9 + 4 * (1 + 2 * 3)) - 8 * 3 * 6) + 5 * (2 * 2);
-    println!(val11);
-}
-
-
-
-fn main(){
-    let a = 3;
     aritmetica();
 }
+
+

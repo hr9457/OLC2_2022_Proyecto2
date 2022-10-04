@@ -544,8 +544,8 @@ class Imprimir(Instruccion):
                 # guardo va iniciar el arreglo en el stack
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN STRING ------------*/\n'
-                cadenaTraduccion3d += 'stack[(int)P] = H;\n'
-                cadenaTraduccion3d += 'P = P + 1;\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = H;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
                 traductor3d.aumentarStack()
 
 
@@ -706,8 +706,8 @@ class Imprimir(Instruccion):
         # guardo va iniciar el arreglo en el stack
         cadenaTraduccion3d += '\n'
         cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN STRING ------------*/\n'
-        cadenaTraduccion3d += 'stack[(int)P] = H;\n'
-        cadenaTraduccion3d += 'P = P + 1;\n'
+        cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = H;\n'
+        # cadenaTraduccion3d += 'P = P + 1;\n'
         traductor3d.aumentarStack()
 
 
