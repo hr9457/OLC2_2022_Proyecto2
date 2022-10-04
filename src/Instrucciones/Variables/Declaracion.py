@@ -259,8 +259,8 @@ class Declaracion(Instruccion):
         if resultado.tipo == TipoExpresion.INTEGER or resultado.tipo == TipoExpresion.FLOAT:
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
-            cadenaTraduccion3d += f'stack[(int)P] = {resultado.valor};\n'
-            cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = {resultado.valor};\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '\n'
 
@@ -282,8 +282,8 @@ class Declaracion(Instruccion):
         elif resultado.tipo == TipoExpresion.CHAR:
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
-            cadenaTraduccion3d += f'stack[(int)P] = {ord(resultado.valor)};\n'
-            cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = {ord(resultado.valor)};\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '\n'
 
@@ -304,8 +304,8 @@ class Declaracion(Instruccion):
             if resultado.valor == '1':
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
-                cadenaTraduccion3d += f'stack[(int)P] = 1;\n'
-                cadenaTraduccion3d += 'P = P + 1;\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = 1;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '\n'
 
@@ -324,8 +324,8 @@ class Declaracion(Instruccion):
             elif resultado.valor == '0':
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
-                cadenaTraduccion3d += f'stack[(int)P] = 0;\n'
-                cadenaTraduccion3d += 'P = P + 1;\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = 0;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
                 cadenaTraduccion3d += '\n'
                 cadenaTraduccion3d += '\n'
 
@@ -349,8 +349,8 @@ class Declaracion(Instruccion):
             # guardo va iniciar el arreglo en el stack
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN STRING ------------*/\n'
-            cadenaTraduccion3d += 'stack[(int)P] = H;\n'
-            cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = H;\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
             cadenaTraduccion3d += '\n'
             posicionStackVariable = traductor3d.getStack()
             traductor3d.aumentarStack()
