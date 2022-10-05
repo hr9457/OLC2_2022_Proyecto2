@@ -17,6 +17,7 @@ class Environment3d:
         self.saltoContinue = ''
         self.saltoRetun = ''
         self.satoLogicoTrue = ''
+        self.saltoReturn = ''
 
 
     
@@ -325,6 +326,9 @@ class Environment3d:
 
 
 
+
+
+
     # *********************************************
     # menajo de saltos
     # BREAK
@@ -338,6 +342,8 @@ class Environment3d:
 
     def clearSaltoBreak(self):
         self.saltoBreak = ''
+
+
 
 
 
@@ -360,6 +366,18 @@ class Environment3d:
 
 
 
+    # *********************************************
+    # RETURN
+    def getSaltoReturn(self):
+        return self.saltoReturn
+
+    
+    def addSaltoReturn(self, cadena):
+        self.saltoReturn += cadena
+
+
+    def clearSaltoReturn(self):
+        self.saltoReturn = ''
 
 
 

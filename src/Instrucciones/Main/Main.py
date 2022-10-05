@@ -1,6 +1,12 @@
 from src.Interfaces.Instruccion import Instruccion
 
 
+
+from src.Instrucciones.Funciones.GetFuncion import GetFuncion
+
+
+
+
 class FuncionMain(Instruccion):
 
     def __init__(self, fila, columna, instrucciones):
@@ -42,8 +48,20 @@ class FuncionMain(Instruccion):
         cadena3d = ''
 
         for instruccion in self.instrucciones:
+
+            if isinstance(instruccion, GetFuncion):
+                # **********************************************
+                #               TRADUCCION
+                traductor3d.setContenidoMain(traductor3d.getCadenaTemporal())
+                traductor3d.clearCadenaTemporal()
+                # **********************************************
+
             
             instruccion.traducir(entorno, traductor3d, cadena3d)
+
+
+            
+
         
 
 

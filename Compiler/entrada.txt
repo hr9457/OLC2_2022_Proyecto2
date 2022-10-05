@@ -994,3 +994,61 @@ fn main(){
 }
 
 
+
+
+fn saludo(){
+    let s = "hola";
+    println!(s);
+}
+
+
+
+fn saludo2(){
+    let s = "hola2";
+    println!(s);
+}
+
+
+
+fn main(){
+    println!("main");
+    let a = 3;
+    saludo2();
+}
+
+
+
+
+
+
+
+
+
+
+fn sumar(a : i64, b : i64){
+    println!(a);
+}
+
+
+
+fn main(){
+    let a = 3;
+    let b = 3;
+    sumar(a,b);
+}
+
+
+
+
+
+fn sumar(a : i64, b : i64){
+    return a + b;
+}
+
+
+
+fn main(){
+    let a = 3;
+    let b = 3;
+    sumar(a,b);
+}

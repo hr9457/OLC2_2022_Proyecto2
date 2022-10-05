@@ -42,7 +42,9 @@ class Funciones(Instruccion):
     def traducir(self, entorno, traductor3d, cadena):
 
 
-        cadena3d = ''
+
+        cantidad_parametros = len(self.listaParametros)
+
 
         # transformar la funcione en formato 3d
         funcion3d = Funcion3d(
@@ -52,54 +54,12 @@ class Funciones(Instruccion):
             self.listaParametros,
             self.listaInstrucciones,
             self.tipoFuncion,
-            traductor3d.getStack()
+            cantidad_parametros
         )
         
 
         # agregar al entorno con toda su estructura
         entorno.addFuncion3D(self.nombreFuncion, funcion3d)
-
-
-
-        # crear un nuevo entorno para la funcion
-        numeroEntrono = entorno.numero + 1
-        envFn = Environment(self.nombreFuncion, numeroEntrono, entorno)
-
-
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'void {self.nombreFuncion} () \n'
-        cadena3d += '{\n'
-        cadena3d += f'\n'
-
-
-        for instruccion  in self.listaInstrucciones:
-            instruccion.traducir(envFn, traductor3d, cadena3d)
-
-
-        cadena3d += traductor3d.getCadenaTemporal()    
-        traductor3d.clearCadenaTemporal()
-
-        cadena3d += f'\n'
-        cadena3d += f'// SALIDA DE LA FUNCION\n'
-        cadena3d += f'  return;\n'
-        cadena3d += '}\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-        cadena3d += f'\n'
-
-
-
-        # **********************************************
-        #               TRADUCCION
-        traductor3d.setContenidoFuncion(cadena3d)
-        # **********************************************
-
-
 
 
         return None

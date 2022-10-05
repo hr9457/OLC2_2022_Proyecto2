@@ -196,14 +196,122 @@ class GetFuncion(Instruccion):
     # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
 
+        cadenaFuncion = ''
 
-        cadena3d = ''
+        cadenaReturn = ''
+        cadenaReturn += f'\n'
+
+
+
+        # ESCRITURA DE LA FUNCION
+        # crear un nuevo entorno para la funcion
+        numeroEntrono = entorno.numero + 1
+        envFn = Environment(self.identificador, numeroEntrono, entorno)
+
+
+        # BUSCO LA EXISTENCIA DE LA FUNCION EN EL ENTORNO
+        funcion3d = entorno.getFuncion3D(self.identificador)
+
+
+        # POSICION REALATIVA PARA LA FUNCION
+        posicion_stack = traductor3d.getStack()
+        traductor3d.aumentarStack()
+
+        # posicion disponible para la funcion
+        funcion3d.posicion_relativa = posicion_stack
 
 
 
 
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'void {self.identificador} () \n'
+        cadenaFuncion += '{\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
 
+
+
+
+        # ejecucion de todas las instrucciones que tenga la funcion 
+        for instruccion  in funcion3d.instrucciones:
+
+            # **********************************************
+            # PARA LA DETENCIA DE UN RETURN EN LAS FUNCIONES
+            if isinstance(instruccion, Primitivo) and instruccion.tipo == TipoExpresion.RETURN:
+                # crear etiqueta de salto de salida
+                etiqueta_return = traductor3d.getEtiqueta()
+                traductor3d.aumentarEtiqueta()
+
+                posicion_relativa_funcion = traductor3d.getStack()
+                traductor3d.aumentarStack()
+                funcion3d.posicion_relativa = posicion_relativa_funcion
+
+                # ejecutar la exp de que tiene el return
+                resultado_exp = instruccion.valor.traducir(envFn, traductor3d, cadena)
+                
+
+                # *****************************************************
+                cadenaFuncion += traductor3d.getCadenaTemporal()    
+                traductor3d.clearCadenaTemporal()
+                # *****************************************************
+
+                traductor3d.addSaltoReturn(f'L{etiqueta_return}:\n')
+                cadenaFuncion += f'\n'
+                cadenaFuncion += f'\n'
+                cadenaFuncion += f'\n'
+                cadenaFuncion += f'/*---- SALTO RETURN ----*/\n'
+                cadenaFuncion += f'stack[(int){posicion_relativa_funcion}] = {resultado_exp.valor};\n'
+                cadenaFuncion += f'\n'
+                cadenaFuncion += f'goto L{etiqueta_return};\n'
+                cadenaFuncion += f'\n'
+                cadenaFuncion += f'\n'
+            # ************************************************
+
+            # traduccion de instruccion por instruccion
+            instruccion.traducir(envFn, traductor3d, cadena)
+
+
+
+        # *****************************************************
+        cadenaFuncion += traductor3d.getCadenaTemporal()    
+        traductor3d.clearCadenaTemporal()
+        # *****************************************************
+
+
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'  // SALTO PARA ETIQUETA RETURN\n'   
+        cadenaFuncion += f'  {traductor3d.getSaltoReturn()}\n'
+        traductor3d.clearSaltoReturn()
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'  // SALIDA DE LA FUNCION\n'
+        cadenaFuncion += f'  return;\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += '}\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
+        cadenaFuncion += f'\n'
         
+
+
+
+        # **********************************************
+        #               TRADUCCION
+        traductor3d.setContenidoFuncion(cadenaFuncion)
+        # **********************************************
+
+
+
+
+
+
+        # CREACION DE LA FUNCION PARA AGREGAR EL LLAMADO EN EL METODO MAIN
+
+        cadena3d = ''        
         cadena3d += f'\n'
         cadena3d += f'\n'
         cadena3d += f'/*----- LLAMADO A UNA FUNCION -------*/\n'
