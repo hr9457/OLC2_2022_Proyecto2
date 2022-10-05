@@ -1,6 +1,9 @@
 from src.environment.Simbolo3d import Simbolo3d
 
 
+from src.Interfaces.TipoExpresion import TipoExpresion
+
+
 class Funcion3d:
 
 
@@ -13,6 +16,7 @@ class Funcion3d:
         self.tipo = tipo
         self.cantidadParametros = cantidadParametros
         self.posicion_relativa = 0
+        self.tipo = TipoExpresion.FUNCION
 
 
 

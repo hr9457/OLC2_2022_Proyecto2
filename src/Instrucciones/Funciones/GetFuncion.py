@@ -323,7 +323,7 @@ class GetFuncion(Instruccion):
         traductor3d.addCadenaTemporal(cadena3d)
 
 
-        return None
+        return funcion3d
 
 
 

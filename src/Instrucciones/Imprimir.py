@@ -340,6 +340,14 @@ class Imprimir(Instruccion):
 
 
 
+        # impresion de la expresion es un tipo funcion
+        elif resultado.tipo == TipoExpresion.FUNCION:
+            # ************ traduccion ******************
+            cadenaTraduccion3d += self.imprimirFuncion3d(resultado.posicion_relativa, traductor3d)
+            return cadenaTraduccion3d
+            # ******************************************
+
+
 
         # impresion de expresiones tipo  float
         elif resultado.tipo == TipoExpresion.FLOAT:
@@ -410,6 +418,9 @@ class Imprimir(Instruccion):
                 cadenaTraduccion3d += f't{temporalActual+1} = stack[(int) t{temporalActual}];\n'
                 traductor3d.aumentarTemporal()
                 cadenaTraduccion3d += self.imprimirInteger3d(f't{temporalActual+1}')
+
+
+
 
 
             # variable es de tipo FLOAT
@@ -740,4 +751,30 @@ class Imprimir(Instruccion):
         # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
 
         return cadenaTraduccion3d           
+        # ******************************************
+
+
+
+
+
+    # metodo para hacer impresiones de valores enteros
+    def imprimirFuncion3d(self, resultado, traductor3d):
+        cadenaTraduccion3d = ''
+        temporal_funcion = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        temporal_posicion = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        # ************ traduccion ******************
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*--------- IMPRESION DE UNA FUNCION ------------*/\n'
+        cadenaTraduccion3d += f't{temporal_funcion} = {resultado};\n'
+        cadenaTraduccion3d += f't{temporal_posicion} = stack[(int) t{temporal_funcion}];\n'
+        cadenaTraduccion3d += f'printf("%d", (int) t{temporal_posicion}); \n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+        return cadenaTraduccion3d
         # ******************************************

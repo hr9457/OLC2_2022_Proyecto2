@@ -1786,15 +1786,15 @@ def p_expresion(p):
 
 # exp tipo espcial
 # exp para funciones
-# def p_expresion_llamada_funcion(p):
-#     ' exp : ID PARENTESISIZQUIERDO PARENTESISDERECHO '
-#     p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), None, p[1], tablaErrores)
+def p_expresion_llamada_funcion(p):
+    ' exp : ID PARENTESISIZQUIERDO PARENTESISDERECHO '
+    p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), None, p[1], tablaErrores)
 
 
 
-# def p_expresion_llamada_funcion_parametros(p):
-#     ' exp : ID PARENTESISIZQUIERDO parametrosllamado PARENTESISDERECHO '
-#     p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), p[3], p[1], tablaErrores)
+def p_expresion_llamada_funcion_parametros(p):
+    ' exp : ID PARENTESISIZQUIERDO parametrosllamado PARENTESISDERECHO '
+    p[0] = GetFuncion(p.lineno(2), columnToken(input, p.slice[2]), p[3], p[1], tablaErrores)
 
 
 

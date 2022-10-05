@@ -1050,5 +1050,5 @@ fn sumar(a : i64, b : i64){
 fn main(){
     let a = 3;
     let b = 3;
-    sumar(a,b);
+    println!(sumar(a,b));
 }
