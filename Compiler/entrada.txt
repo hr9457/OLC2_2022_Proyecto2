@@ -1052,3 +1052,16 @@ fn main(){
     let b = 3;
     println!(sumar(a,b));
 }
+
+
+
+
+fn main(){
+    let a = 3;
+    let b = 3;
+    let c = a + b;
+    println!(c);
+}
+
+
+
