@@ -3,7 +3,7 @@ from src.Interfaces.Instruccion import Instruccion
 
 
 from src.Instrucciones.Funciones.GetFuncion import GetFuncion
-
+from src.Instrucciones.Imprimir import Imprimir
 
 
 
@@ -57,6 +57,15 @@ class FuncionMain(Instruccion):
                 # **********************************************
 
             
+            if isinstance(instruccion, Imprimir):
+                # **********************************************
+                #               TRADUCCION
+                traductor3d.setContenidoMain(traductor3d.getCadenaTemporal())
+                traductor3d.clearCadenaTemporal()
+                # **********************************************
+
+
+
             instruccion.traducir(entorno, traductor3d, cadena3d)
 
 

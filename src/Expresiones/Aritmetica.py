@@ -219,6 +219,29 @@ class Aritmetica(Expresion):
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
 
+            temporal_izquierdo = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            temporal_derecho = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            traduccion = ''
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traduccion += f't{temporal_izquierdo} = stack[(int) {nodoIzquierdo.posicion}];\n'
+            traduccion += f'\n'
+
+            nodoIzquierdo.valor = f't{temporal_izquierdo}'
+
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traduccion += f't{temporal_derecho} = stack[(int) {nodoDerecho.posicion}];\n'
+            traduccion += f'\n'
+
+            nodoDerecho.valor = f't{temporal_derecho}'
+
+            traductor3d.addCadenaTemporal(traduccion)
+
 
         # SI SOLO EL NODO IZQUIERDO ES UN ID
         elif nodoIzquierdo.tipo == TipoExpresion.ID and nodoDerecho.tipo != TipoExpresion.ID:
