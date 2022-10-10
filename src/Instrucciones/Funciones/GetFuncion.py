@@ -4,7 +4,7 @@ from src.environment.Simbolo import Simbolo
 from src.Expresiones.Primitivo import Primitivo
 from src.Interfaces.TipoExpresion import TipoExpresion
 
-
+from src.environment.Simbolo3d import Simbolo3d
 
 class GetFuncion(Instruccion):
 
@@ -196,6 +196,9 @@ class GetFuncion(Instruccion):
     # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
 
+
+
+
         cadenaFuncion = ''
 
         cadenaReturn = ''
@@ -213,12 +216,25 @@ class GetFuncion(Instruccion):
         funcion3d = entorno.getFuncion3D(self.identificador)
 
 
+
+        # copiando parametro por parametro a lo nuevo
+        contador = 0
+        for parametro in funcion3d.listaParametros:
+            variable_parametro = entorno.getVariable3d(self.listadoParametros[contador].valor)
+            envFn.addVariable3d(self.listadoParametros[contador].valor, variable_parametro)
+            contador += 1
+
+
+
+
+
+
         # POSICION REALATIVA PARA LA FUNCION
         posicion_stack = traductor3d.getStack()
         traductor3d.aumentarStack()
 
         # posicion disponible para la funcion
-        funcion3d.posicion_relativa = posicion_stack
+        # funcion3d.posicion_relativa = posicion_stack
 
 
 

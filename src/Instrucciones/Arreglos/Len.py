@@ -4,6 +4,12 @@ from src.Interfaces.TipoMutable import TipoMutable
 from src.environment.Simbolo import Simbolo
 from src.Instrucciones.Arreglos.ExpArreglo import ExpArreglo
 
+
+from src.environment.Simbolo3d import Simbolo3d
+
+
+
+
 class Len(Expresion):
 
 
@@ -84,3 +90,53 @@ class Len(Expresion):
 
 
 
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION PARA EL TAMANIO DE UN ARREGLO
+    # -------------------------------------------------------------------------
+    def traducir(self, entorno, traductor3d, cadena):
+
+        cadenaTraduccion3d = ''
+
+        arreglo = entorno.getVariable3d(self.variable.valor)
+
+        temporal_arreglo = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        temporal_heap = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*---- LEN DE UN ARREGLO ----*/\n'
+        cadenaTraduccion3d += f't{temporal_arreglo} = {arreglo.posicion}; \n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f't{temporal_heap} = heap[(int) t{temporal_arreglo}];\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+
+
+        # **********************************************
+        #               TRADUCCION     
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+        len_arreglo = Simbolo3d(
+            0,
+            0,
+            None,
+            TipoExpresion.INTEGER,
+            f't{temporal_heap}',
+            None,
+            0,
+            0           
+        )
+
+
+
+
+        return len_arreglo

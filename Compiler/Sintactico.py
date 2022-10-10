@@ -1804,7 +1804,7 @@ def p_expresion_llamada_funcion_parametros(p):
 
 
 
-
+# [ LISTADOEPXRESIONES ]
 # arreglos como expresiones
 def p_expresion_arreglo(p): 
     ' exp : CORCHETEDERECHO listadoArreglo CORCHETEIZQUIERDO  '

@@ -227,16 +227,16 @@ class Environment:
     #               FUNCIONES EN 3D    
     # *********************************************
     def addFuncion3D(self, id, funcion):
-        self.funciones.update({id:funcion})
+        self.funciones3d.update({id:funcion})
         print('funcion agregada')
 
 
 
 
     def getFuncion3D(self, id):
-        for key in self.funciones.keys():
+        for key in self.funciones3d.keys():
             if key == id:
-                return self.funciones[key]
+                return self.funciones3d[key]
 
 
         if self.prev != None:

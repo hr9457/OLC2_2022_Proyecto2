@@ -7,6 +7,9 @@ from src.Instrucciones.Arreglos.ExpArreglo import ExpArreglo
 from src.Instrucciones.Arreglos.TipoArreglo import TipoArreglo
 
 
+from src.environment.Simbolo3d import Simbolo3d
+
+
 class Declaracion(Instruccion):
 
     # constructor
@@ -379,6 +382,76 @@ class Declaracion(Instruccion):
             # **********************************************
             #               TRADUCCION     
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+
+
+
+
+        elif resultado.tipo == TipoExpresion.ARREGLO:
+            cadenaTraduccion3d = ''
+
+            posicion_stack = traductor3d.getStack()
+            traductor3d.aumentarStack()
+
+            temporal_stack = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            # ************ traduccion ******************
+            # guardo va iniciar el arreglo en el stack
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN ARREGLO ------------*/\n'
+            cadenaTraduccion3d += f't{temporal_stack} = {posicion_stack};\n'
+            cadenaTraduccion3d += f'stack[(int) t{temporal_stack}] = H;\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+            # tamanio del arreglo
+            tamanio_arreglo = len(resultado.listadoExpresiones)
+
+            cadenaTraduccion3d += f'heap[(int)H] = {tamanio_arreglo};\n'
+            cadenaTraduccion3d += f'H = H + 1;\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            traductor3d.aumentarHeap()
+            
+
+            # for para recorrer todos los eelementos de un arreglo
+            for elemento in resultado.listadoExpresiones:
+                cadenaTraduccion3d += f'heap[(int) H] = {elemento.valor};\n'
+                cadenaTraduccion3d += f'H = H + 1;\n'
+                cadenaTraduccion3d += f'\n'
+                traductor3d.aumentarHeap()
+
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+            # agregar la variable al entorno
+            # contendio en un simbolo3d
+            variable_arreglo = Simbolo3d(
+                resultado.fila,
+                resultado.columna,
+                None,
+                TipoExpresion.ARREGLO,
+                resultado.listadoExpresiones,
+                None,
+                posicion_stack,
+                tamanio_arreglo
+            )
+
+
+            # agrego variable al entorno
+            entorno.addVariable3d(self.identificador, variable_arreglo)
+
+
+            # **********************************************
+            #               TRADUCCION     
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
 
 
 
