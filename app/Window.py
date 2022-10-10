@@ -15,8 +15,8 @@ class Aplicacion:
         # para obtener medidas de la pantalla para la ventana
         self.altoPantalla = self.ventana.winfo_screenheight()
         self.anchoPantalla = self.ventana.winfo_screenwidth()
-        self.alto = int(self.altoPantalla-300)
-        self.ancho = int(self.anchoPantalla-300)
+        self.alto = int(self.altoPantalla-150)
+        self.ancho = int(self.anchoPantalla-200)
 
         # formatos para la ventana de la app
         self.ventana.geometry(f'{self.ancho}x{self.alto}')
@@ -181,16 +181,35 @@ class Aplicacion:
 
 
 
+
+        # FRAME QUE CONTIENE LOS TXT DE SALIDA 
+
+
         frameSalida = Frame(relief=RAISED, bd=1)
-        frameSalida.rowconfigure(0, minsize=self.alto, weight=1)
+        frameSalida.rowconfigure(0, minsize=self.alto/2, weight=1)
+        frameSalida.rowconfigure(1, minsize=self.alto/2, weight=1)
         frameSalida.columnconfigure(0,weight=1)
+
 
 
         self.textAreaSalida = Text(frameSalida, wrap=WORD, font=('Consolas',12))
         self.textAreaSalida.grid(row=0, column=0, sticky='nswe')
 
+
+        self.txtAreaOptimizacion = Text(frameSalida, wrap=WORD, font=('Consolas',12))
+        self.txtAreaOptimizacion.grid(row=1, column=0, sticky='nswe')
+
+
         scrollbar3 = Scrollbar(frameSalida, orient='vertical', command=self.textAreaSalida.yview)
         scrollbar3.grid(row=0, column=1, sticky='ns')
         self.textAreaSalida['yscrollcommand'] = scrollbar3.set	
+
+
+
+        scrollbar4 = Scrollbar(frameSalida, orient='vertical', command=self.txtAreaOptimizacion.yview)
+        scrollbar4.grid(row=1, column=1, sticky='ns')
+        self.txtAreaOptimizacion['yscrollcommand'] = scrollbar4.set	
+
+
 
         frameSalida.grid(row=0, column=3, sticky='ns')
