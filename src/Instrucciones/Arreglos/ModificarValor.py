@@ -155,3 +155,77 @@ class ModificarValorArreglo(Instruccion):
 
             else:
                 var.listadoExpresiones[index].valor = nuevoValor.valor
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE MODIFICAR EL VALOR DE UN ARREGLO
+    # -------------------------------------------------------------------------
+    def traducir(self, entorno, traductor3d, cadena):
+
+        cadenaTraduccion3d = ''
+
+        arreglo = entorno.getVariable3d(self.variable)
+
+        temporal_acceso = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+
+        temporal_heap = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*----- MODIFICACIN VALOR DE UN ARREGLO -----*/\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f't{temporal_acceso} = {arreglo.posicion};\n'
+        cadenaTraduccion3d += f't{temporal_heap} = stack[(int) t{temporal_acceso}];\n'
+        cadenaTraduccion3d += f'\n'
+
+
+        if self.exp[0].tipo == TipoExpresion.ID:
+            variable_expresion = entorno.getVariable3d(self.exp[0].valor)
+
+            temporal_variable_expresion = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + 1;\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_variable_expresion} = {variable_expresion.posicion};\n'
+            cadenaTraduccion3d += f't{temporal_variable_expresion} = stack[(int) t{temporal_variable_expresion}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + t{temporal_variable_expresion};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+        else:
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + 1;\n'
+            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + {self.exp[0].valor};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+        if self.newValue.tipo == TipoExpresion.ARREGLO:
+            acceso_arreglo = self.newValue.traducir(entorno, traductor3d, cadena)
+            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {acceso_arreglo.valor};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+        else:
+            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {self.newValue.valor};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+        # **********************************************
+        #               TRADUCCION     
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+        return None
