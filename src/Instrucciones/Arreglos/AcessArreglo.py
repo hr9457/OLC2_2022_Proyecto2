@@ -238,7 +238,7 @@ class AcessArreglo(Expresion):
 
 
 
-
+        index_acceso = self.index.traducir(entorno, traductor3d, cadena)
 
 
         
@@ -253,27 +253,45 @@ class AcessArreglo(Expresion):
         cadenaTraduccion3d += f'\n'
 
 
-        if self.index.tipo == TipoExpresion.ID:
-            index_arreglo = entorno.getVariable3d(self.index.valor)
+        if index_acceso.tipo == TipoExpresion.ID:
+            index_arreglo = entorno.getVariable3d(index_acceso.valor)
 
-            temporal_index_arreglo = traductor3d.getTemporal()
+            temporal_index_variable = traductor3d.getTemporal()
             traductor3d.aumentarTemporal()
 
             temporal_variable = traductor3d.getTemporal()
             traductor3d.aumentarTemporal()
 
             cadenaTraduccion3d += f'\n'
-            cadenaTraduccion3d += f't{temporal_index_arreglo} = {index_arreglo.posicion};\n'
+            cadenaTraduccion3d += f't{temporal_index_variable} = {index_arreglo.posicion};\n'
             cadenaTraduccion3d += f'\n'
-            cadenaTraduccion3d += f't{temporal_variable} = stack[(int) t{temporal_index_arreglo}];\n'
+            cadenaTraduccion3d += f't{temporal_variable} = stack[(int) t{temporal_index_variable}];\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + 1;\n'
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + t{temporal_variable};\n'
+
+
+        # el index es un valor 
         else:
-            index_arreglo = self.index.valor
+
+            etiqueta_salida = traductor3d.getEtiqueta()
+            traductor3d.aumentarEtiqueta()
+
+            etiqueta_continuar = traductor3d.getEtiqueta()
+            traductor3d.aumentarEtiqueta()
+
             cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'if ( {index_acceso.valor} > t{temporal_heap} ) goto L{etiqueta_salida};\n'
+            cadenaTraduccion3d += f'goto L{etiqueta_continuar};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'L{etiqueta_salida}:\n'
+            cadenaTraduccion3d += f'    boundsError();\n'
+            cadenaTraduccion3d += f'\n'            
+            cadenaTraduccion3d += f'L{etiqueta_continuar}:\n'
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + 1;\n'
-            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + {index_arreglo};\n'
+            cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + {index_acceso.valor};\n'
+
 
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f't{temporal_indice} = heap[(int) t{temporal_heap}];\n'

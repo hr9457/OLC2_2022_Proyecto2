@@ -1516,7 +1516,7 @@ def p_tipos(p):
                 |   USIZE
                 |   CORCHETEDERECHO  tipo  CORCHETEIZQUIERDO  '''
 
-    # print(p.slice[1].type)
+    # print(p.slice[1].type)USIZE
 
     if p.slice[1].type == 'I64' or p.slice[1].type == 'USIZE':
         p[0] = TipoExpresion.INTEGER
@@ -1690,9 +1690,10 @@ def p_aritmetica(p):
 # manejo de casteos para expresiones
 def p_casteos(p):
     ''' exp :   exp AS I64 
-        exp :   exp AS F64   '''
+        exp :   exp AS F64   
+        exp :   exp AS USIZE   '''
 
-    if p.slice[3].type == 'I64':
+    if p.slice[3].type == 'I64' or p.slice[3].type == 'USIZE':
         p[0] = Casteo(0,0, p[1], TipoExpresion.INTEGER)
 
     

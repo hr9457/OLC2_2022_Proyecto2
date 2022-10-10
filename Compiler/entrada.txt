@@ -898,37 +898,6 @@ Se debió imprimir
 
 
 
-fn main() {
-    
-    for i in 0..3 {
-
-        println!("hola");
-
-        for j in 0..(5 - i) {
-            println!(3);
-        }
-
-    }
-
-}
-
-
-
-
-
-
-
-fn main() {
-    
-    let uno = "** ";
-
-    uno = uno + "hola".to_string();
-
-    println!(uno);
-
-}
-
-
 
 
 
@@ -1123,21 +1092,6 @@ fn main(){
 
 
 
-    let mut i: usize = 0;
-    let mut j: usize = 0;
-    
-    while i < (arr.len() - 1) {
-        j = i + 1;
-        while j < arr.len() {
-            if arr[i] > arr[j] {
-                let aux: i64 = a[i];
-                a[i] = a[j];
-                a[j] = aux;
-            }
-            j = j + 1;
-        }
-        i = i + 1;
-    }
 
 
 
@@ -1241,4 +1195,32 @@ fn main(){
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// COMPROBACION DINAMICA
+
+
+fn main() {
+    let a: i64 = 25 - 25;
+    let b: i64 = (((1 + 1) / 2) * 10) / a;
+    println!("{}", b);
+
+    let x: usize = 10 + 2 - (a as usize);
+    let arr: [i64; 2] = [1,2];
+    println!("{}", arr[x * 2 + 10 - ((a as usize) * 20)]);
+}
+
+
 

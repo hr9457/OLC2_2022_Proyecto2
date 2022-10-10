@@ -369,7 +369,17 @@ class Aritmetica(Expresion):
                     # obtengo el valor actual de los temporales
                     temporalActual = traductor3d.getTemporal()
 
+                    etiqueta_salida = traductor3d.getEtiqueta()
+                    traductor3d.aumentarEtiqueta()
+
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} / {resultadoNodoDerecho} ;\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'if ( {resultadoNodoDerecho} != 0 ) goto L{etiqueta_salida};\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'    mathError();\n'
+                    cadenaTraduccion3d += f'    t{temporalActual} = 0;\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'L{etiqueta_salida}:\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
@@ -517,7 +527,17 @@ class Aritmetica(Expresion):
                     # obtengo el valor actual de los temporales
                     temporalActual = traductor3d.getTemporal()
 
+                    etiqueta_salida = traductor3d.getEtiqueta()
+                    traductor3d.aumentarEtiqueta()
+
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} / {resultadoNodoDerecho} ;\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'if ( {resultadoNodoDerecho} != 0 ) goto L{etiqueta_salida};\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'    mathError();\n'
+                    cadenaTraduccion3d += f'    t{temporalActual} = 0;\n'
+                    cadenaTraduccion3d += f'\n'
+                    cadenaTraduccion3d += f'L{etiqueta_salida}:\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
