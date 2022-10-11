@@ -187,3 +187,75 @@ class Casteo(Instruccion):
 
 
         return -1
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+
+        expresion3d = self.expresion.optimizar(entorno, traductor3d, cadena)
+
+
+
+        if expresion3d.tipo == TipoExpresion.ID:
+            expresion3d = entorno.getVariable3d(expresion3d.valor)
+
+
+
+        
+        # caso de casteo para tipos integer
+        if expresion3d.tipo == TipoExpresion.INTEGER:
+            
+
+            # solo con los tipo que se puede castear
+            if self.tipo == TipoExpresion.INTEGER:
+                expresion3d.tipo = TipoExpresion.INTEGER
+                return expresion3d
+
+
+            elif self.tipo == TipoExpresion.FLOAT:
+                
+                temporal_actual = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+
+                cadenaTraduccion3d += f'\n'
+                cadenaTraduccion3d += f'\n'
+                cadenaTraduccion3d += f't{temporal_actual} = {expresion3d.valor} * 1.0;\n'
+                cadenaTraduccion3d += f'\n'
+                traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+                expresion3d.tipo = TipoExpresion.FLOAT
+                expresion3d.valor = f't{temporal_actual}'
+                return expresion3d
+
+
+
+
+        # caso de casteo para tipos float
+        elif expresion3d.tipo == TipoExpresion.FLOAT:
+            
+            # solo con los tipo que se puede castear
+            if self.tipo == TipoExpresion.INTEGER:
+                expresion3d.tipo = TipoExpresion.INTEGER
+                return expresion3d
+
+
+            elif self.tipo == TipoExpresion.FLOAT:
+                expresion3d.tipo = TipoExpresion.FLOAT
+                return expresion3d
+
+
+
+        return -1

@@ -60,8 +60,9 @@ class InstruccionElse(Expresion):
 
 
 
-
-
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
         
         for instruccion in self.instrucciones:
@@ -69,3 +70,18 @@ class InstruccionElse(Expresion):
 
         return None
 
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+        
+        for instruccion in self.instrucciones:
+            instruccion.optimizar(entorno, traductor3d, cadena)
+
+        return None

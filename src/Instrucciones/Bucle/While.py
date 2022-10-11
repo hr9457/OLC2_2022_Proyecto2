@@ -185,3 +185,105 @@ class While(Instruccion):
         
         
         return None
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+        
+        # creacion de un nuevo entrono para el while
+        numeroEntorno = entorno.numero + 1
+        envWhile = Environment('WHILE', numeroEntorno, entorno)
+
+
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*------- WHILE -------*/\n'
+
+
+        # variable pivote para enciclar el while
+        pivote = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+        cadenaTraduccion3d += f'L{pivote}:\n'
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+        cadenaTraduccion3d = ''
+        
+
+        # condicional para enciclar
+        etiqueta_if = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+
+        etiqueta_else = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+
+
+        expresion3d = self.expresion.optimizar(entorno, traductor3d, cadena)
+
+
+        # condicional para enciclar
+        cadenaTraduccion3d += f'if ( {expresion3d.valor} ) goto L{etiqueta_if};\n'
+        cadenaTraduccion3d += f'goto L{etiqueta_else};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'L{etiqueta_if}:\n'
+
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+        cadenaTraduccion3d = ''
+
+
+        # instrucciones del if
+        for instruccion in self.nodo:
+
+            instruccion.optimizar(envWhile, traductor3d, cadena)	
+
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*- PIVOTE DEL WHILE -*/\n'
+        cadenaTraduccion3d += traductor3d.getSaltoContinue()
+        cadenaTraduccion3d += f'goto L{pivote};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        
+
+
+        cadenaTraduccion3d += f'L{etiqueta_else}:\n\n'
+
+
+
+        # *********************** TRADUCCION *********************
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+        
+
+
+        #            PARA MANEJO DEL SALIDA BREAK:
+        #               instruccion de quiebre
+        traductor3d.addCadenaTemporal(traductor3d.getSaltoBreak())
+        traductor3d.clearSaltoBreak()
+        traductor3d.clearSaltoContinue()
+
+
+
+        
+        
+        return None

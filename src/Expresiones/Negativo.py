@@ -62,3 +62,26 @@ class Negativo(Expresion):
             return nodoUnico
 
 
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+
+
+
+        nodoUnico = self.nodo.optimizar(entorno, traductor3d, cadena)
+
+
+        if nodoUnico.tipo == TipoExpresion.INTEGER:
+            nodoUnico.valor = -1 * int(nodoUnico.valor)
+            return nodoUnico
+
+
+
+        elif nodoUnico.tipo == TipoExpresion.FLOAT:
+            nodoUnico.valor = -1.0 * float(nodoUnico.valor)
+            return nodoUnico

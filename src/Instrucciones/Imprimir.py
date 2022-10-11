@@ -316,7 +316,6 @@ class Imprimir(Instruccion):
 
 
 
-
     # PARA EL MANEJO DE UNA EXPRESION SIMPLE
     def impresionSimple(self, resultado ,entorno, traductor3d, cadena):
         # traduccion a 3d
@@ -778,3 +777,143 @@ class Imprimir(Instruccion):
         # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
         return cadenaTraduccion3d
         # ******************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    # traduccion a 3d
+    def optimizar(self, entorno, traductor3d, cadena):
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+
+        # si la impresion es simple 
+        if self.lista == None:
+            resultado = self.contenido.optimizar(entorno, traductor3d, cadena)
+            cadenaTraduccion3d += self.impresionSimple(resultado, entorno, traductor3d, cadena)
+            cadenaTraduccion3d += '//SALTO DE LINEA\n'  
+            cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n' 
+            # *********************************************
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+            # *********************************************         
+
+
+        # si la impresion es multiple o con {}
+        else:           
+            # si la impresion es simple 
+            traductor3d.addCadenaTemporal(self.impresionMultiple2(entorno, traductor3d, cadena))
+
+        return None
+
+
+
+
+
+
+
+
+    # PARA MENEJO DE IMPRESIONES MULTIPLES EN 3D
+    # LISTADO DE EXPRESIONES
+    def impresionMultiple2(self, entorno, traductor3d, cadena):
+        # primitivo
+        countNodoDerecho = 0
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+        # -------------------------------------------------------------------------
+        #                 IMPRESION DE EXPRESIONES DE SIMBOLOS
+        # -------------------------------------------------------------------------
+
+
+        # obtener el contenido que va imprimir
+        # tien que retornar un Simbolo
+        resultado = self.contenido.optimizar(entorno, traductor3d, cadena)
+
+
+        # impiresion de expresiones tipo string
+        if resultado.tipo == TipoExpresion.STRING:
+            # haciendo split de la cadena
+
+
+            llaves_iniciales = 0
+            cantidad_llaves = resultado.valor.count('{}')
+
+            stringDividido = resultado.valor.split('{}')
+            
+            # stringDividido.pop()
+
+
+            for elementoString in stringDividido:
+                # ************ traduccion ******************
+                # guardo va iniciar el arreglo en el stack
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN STRING ------------*/\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = H;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
+                traductor3d.aumentarStack()
+
+
+                # guardo el tambio del arreglo en la primera posicion del heap
+                cadenaTraduccion3d += f'heap[(int)H] = {len(elementoString)};\n'
+                cadenaTraduccion3d += 'H = H + 1;\n'
+                traductor3d.aumentarHeap()
+
+
+                # guardo el tamanio del arreglo en t0
+                cadenaTraduccion3d += f't0 = {len(elementoString)};\n'
+
+                # guardo donde inicio el arreglo
+                cadenaTraduccion3d += f't2 = H;\n'
+
+
+                # for para todo el string
+                # for para recorrer caracter a caracter el string
+                for letra in elementoString:
+                    cadenaTraduccion3d += f'heap[(int)H] = {ord(letra)};\n'
+                    cadenaTraduccion3d += f'H = H + 1;\n'
+                    traductor3d.aumentarHeap()
+
+
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*--------- IMPRESION DE UN STRING -----------*/\n'
+                cadenaTraduccion3d += 'printString();\n'
+                cadenaTraduccion3d += '\n' 
+
+
+                # IMPRIMIR LA EXPRESION DESPUES DEL {}
+                if llaves_iniciales < cantidad_llaves:
+                    expresion = self.lista[countNodoDerecho]
+                    expresion3d = expresion.optimizar(entorno, traductor3d, cadena)
+                    countNodoDerecho += 1
+                    llaves_iniciales += 1
+                
+
+                    # IMPRESION DE LA EXPRESION SIMPLE
+                    cadenaTraduccion3d += self.impresionSimple(expresion3d, entorno, traductor3d, cadena)
+
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '//SALTO DE LINEA\n'  
+            cadenaTraduccion3d += 'printf("%c", (int)10);\n'        
+
+        # *********************************************
+        return cadenaTraduccion3d
+        # *********************************************
+
+

@@ -85,6 +85,39 @@ class Aplicacion:
 
 
 
+
+    # funcionalidad para traduccir a 3d
+    def optimizacion3d(self):
+        print('OPTIMIZAR EN 3d')
+        entrada = self.textAreaEntrada.get(1.0,END)
+        result3d = Sintactico.traduccir3doptimizado(entrada)
+        self.txtAreaOptimizacion.delete(1.0,END)
+        self.txtAreaOptimizacion.insert(1.0,result3d)
+
+
+
+
+
+    def ejecutarTraducciones3d(self):
+        print('TRADUCCION A 3D')
+        entrada = self.textAreaEntrada.get(1.0,END)
+        result3d = Sintactico.traduccir3d(entrada)
+        self.textAreaSalida.delete(1.0,END)
+        self.textAreaSalida.insert(1.0,result3d)
+
+
+        print('OPTIMIZAR EN 3d')
+        entrada = self.textAreaEntrada.get(1.0,END)
+        result3d = Sintactico.traduccir3doptimizado(entrada)
+        self.txtAreaOptimizacion.delete(1.0,END)
+        self.txtAreaOptimizacion.insert(1.0,result3d)
+
+
+
+
+
+
+
     # ------------------------------
     # funcionalidad para reportes
     def reporteErrores(self):
@@ -146,7 +179,7 @@ class Aplicacion:
         frameBotones['bg'] = '#49A'
         botonAbrir = Button(frameBotones, text='Abrir')
         botonCompilar = Button(frameBotones, text='Compilar', command=self.compilar)
-        boton3d = Button(frameBotones, text='3d', command=self.traducir3d)
+        boton3d = Button(frameBotones, text='3d', command=self.ejecutarTraducciones3d)
 
         # expasion de los botones de forma horizontal (stiky)
         botonAbrir.grid(row=0, column=0, sticky='WE', padx=5, pady= 5)
