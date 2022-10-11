@@ -60,3 +60,32 @@ class Primitivo(Expresion):
                 0,
                 0
             )
+
+
+
+    # retorno para traduccion en 3d
+    def optimizar(self, entorno, traductor3d, cadena):
+
+        if self.tipo == TipoExpresion.STRING:
+            return Simbolo3d(
+                self.fila,
+                self.columna,
+                None,
+                self.tipo,
+                self.valor,
+                None,
+                0,
+                len(self.valor)
+            )
+        
+        else:
+            return Simbolo3d(
+                self.fila,
+                self.columna,
+                None,
+                self.tipo,
+                self.valor,
+                None,
+                0,
+                0
+            )

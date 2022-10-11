@@ -459,3 +459,237 @@ class Declaracion(Instruccion):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE DECLARACIONES DE VARIABLES 3D
+    # -------------------------------------------------------------------------
+
+    # self.identificador = viene el identificador de la variable
+    # self.valor = viene el simbolo para la variable
+    def optimizar(self, entorno, traductor3d, cadena):
+
+
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+
+        # self.valor = valor de la variable
+        # obtener el valor del simbolo para hacer la asginacion de la variable
+        resultado = self.valor.optimizar(entorno, traductor3d, cadena)
+        
+
+        
+        # tipo del simbolo --> INTEGER o FLOAT
+        # valores de un solo byte asignacion va al stack
+        if resultado.tipo == TipoExpresion.INTEGER or resultado.tipo == TipoExpresion.FLOAT:
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = {resultado.valor};\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+
+
+            # agrega al entorno la variable
+            resultado.posicion = traductor3d.getStack()
+            traductor3d.aumentarStack()
+            entorno.addVariable3d(self.identificador,resultado)
+            
+
+
+            # **********************************************
+            #               TRADUCCION
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+        # menajeo de variables tipo --> CHAR
+        elif resultado.tipo == TipoExpresion.CHAR:
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = {ord(resultado.valor)};\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+
+
+            # agrega al entorno la variable
+            resultado.posicion = traductor3d.getStack()
+            entorno.addVariable3d(self.identificador, resultado)
+            traductor3d.aumentarStack()
+
+            # **********************************************
+            #               TRADUCCION               
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+        # menjo de variables tipo --> BOOL
+        elif resultado.tipo == TipoExpresion.BOOL:
+            if resultado.valor == '1':
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = 1;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
+
+                
+
+                # agrega al entorno la variable
+                resultado.posicion = traductor3d.getStack()
+                entorno.addVariable3d(self.identificador, resultado)
+                traductor3d.aumentarStack()
+
+
+                # **********************************************
+                #               TRADUCCION     
+                traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+            elif resultado.valor == '0':
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+                cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = 0;\n'
+                # cadenaTraduccion3d += 'P = P + 1;\n'
+                cadenaTraduccion3d += '\n'
+                cadenaTraduccion3d += '\n'
+
+
+                
+                # agrega al entorno la variable
+                resultado.posicion = traductor3d.getStack()
+                entorno.addVariable3d(self.identificador, resultado)
+                traductor3d.aumentarStack()
+
+
+                # **********************************************
+                #               TRADUCCION     
+                traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+        # menjo de variables tipo --> STRING
+        elif resultado.tipo == TipoExpresion.STRING:
+            cadenaTraduccion3d = ''
+            # ************ traduccion ******************
+            # guardo va iniciar el arreglo en el stack
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN STRING ------------*/\n'
+            cadenaTraduccion3d += f'stack[(int){traductor3d.getStack()}] = H;\n'
+            # cadenaTraduccion3d += 'P = P + 1;\n'
+            cadenaTraduccion3d += '\n'
+            posicionStackVariable = traductor3d.getStack()
+            traductor3d.aumentarStack()
+
+            # guardo el tambio del arreglo en la primera posicion del heap
+            cadenaTraduccion3d += f'heap[(int)H] = {len(resultado.valor)};\n'
+            cadenaTraduccion3d += 'H = H + 1;\n'
+            traductor3d.aumentarHeap()
+
+
+            # for para recorrer caracter a caracter el string
+            for letra in resultado.valor:
+                cadenaTraduccion3d += f'heap[(int)H] = {ord(letra)};\n'
+                cadenaTraduccion3d += f'H = H + 1;\n'
+                cadenaTraduccion3d += '\n'
+                traductor3d.aumentarHeap()
+
+
+            
+            # agrega al entorno la variable
+            resultado.posicion = posicionStackVariable
+            resultado.tamanio = len(resultado.valor)
+            entorno.addVariable3d(self.identificador, resultado)
+
+
+            # **********************************************
+            #               TRADUCCION     
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+
+
+
+
+        elif resultado.tipo == TipoExpresion.ARREGLO:
+            cadenaTraduccion3d = ''
+
+            posicion_stack = traductor3d.getStack()
+            traductor3d.aumentarStack()
+
+            temporal_stack = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            # ************ traduccion ******************
+            # guardo va iniciar el arreglo en el stack
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN ARREGLO ------------*/\n'
+            cadenaTraduccion3d += f't{temporal_stack} = {posicion_stack};\n'
+            cadenaTraduccion3d += f'stack[(int) t{temporal_stack}] = H;\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+            # tamanio del arreglo
+            tamanio_arreglo = len(resultado.listadoExpresiones)
+
+            cadenaTraduccion3d += f'heap[(int)H] = {tamanio_arreglo};\n'
+            cadenaTraduccion3d += f'H = H + 1;\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            traductor3d.aumentarHeap()
+            
+
+            # for para recorrer todos los eelementos de un arreglo
+            for elemento in resultado.listadoExpresiones:
+                cadenaTraduccion3d += f'heap[(int) H] = {elemento.valor};\n'
+                cadenaTraduccion3d += f'H = H + 1;\n'
+                cadenaTraduccion3d += f'\n'
+                traductor3d.aumentarHeap()
+
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+            # agregar la variable al entorno
+            # contendio en un simbolo3d
+            variable_arreglo = Simbolo3d(
+                resultado.fila,
+                resultado.columna,
+                None,
+                TipoExpresion.ARREGLO,
+                resultado.listadoExpresiones,
+                None,
+                posicion_stack,
+                tamanio_arreglo
+            )
+
+
+            # agrego variable al entorno
+            entorno.addVariable3d(self.identificador, variable_arreglo)
+
+
+            # **********************************************
+            #               TRADUCCION     
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+
+
+        return None
+
+
+

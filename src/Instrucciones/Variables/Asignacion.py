@@ -120,3 +120,54 @@ class Asignacion(Instruccion):
 
 
         return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+
+        # traduccion a 3d
+        cadenaTraduccion3d = ''
+
+
+        # variable a cambiar
+        variable3d = entorno.getVariable3d(self.identificador)
+
+
+        # expresion por el cual se va a cambiar el valor
+        expresion3d = self.expresion.optimizar(entorno, traductor3d, cadena)
+
+
+
+        posicionVariable3d = variable3d.posicion
+
+
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*------- ASIGNACION -------- */\n'
+        cadenaTraduccion3d += f'stack[(int){posicionVariable3d}] = {expresion3d.valor};\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+
+
+
+        # ************* TRADUCCION
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+        return None

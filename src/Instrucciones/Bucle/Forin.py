@@ -305,3 +305,187 @@ class Forin(Instruccion):
 
         
         return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+        
+        # cadena para concatenar
+        cadenaTraduccion3d = ''
+
+
+        # crear un nuevo entorno para el for
+        numeroEntorno = entorno.numero + 1
+        envFor = Environment('FOR',numeroEntorno,entorno)
+
+
+        
+        # for exp in expInicio punto punto expFinal { instrucciones }
+
+        # utildades para el manejo del for        
+        # exp --> n (pivote)
+        pivote = self.variable.optimizar(entorno, traductor3d, cadena)
+        posicion_pivote = traductor3d.getStack()
+        traductor3d.aumentarStack()
+
+        envFor.addVariable3d(
+            pivote.valor,
+            Simbolo3d(
+                pivote.fila,
+                pivote.columna,
+                pivote.valor,
+                TipoExpresion.INTEGER,
+                0,
+                None,
+                posicion_pivote,
+                0
+            )
+        )
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*------ PIVOTE FOR IN ------*/\n'
+        cadenaTraduccion3d += f'stack[(int)P] = 0;\n'
+        cadenaTraduccion3d += f'P = P + 1;\n'
+
+
+
+
+
+        # expInicio
+        inicio_for = self.inicio.optimizar(entorno, traductor3d, cadena)
+        if inicio_for.tipo == TipoExpresion.ID:
+
+            temporal_variable_inicio = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_variable_inicio} = stack[(int) {inicio_for.posicion}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            inicio_for = envFor.getVariable3d(inicio_for.valor)
+            inicio_for.valor = f't{temporal_variable_inicio}'
+
+        temporal_inicio = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+
+        # expFinal
+        final_for = self.final.optimizar(entorno, traductor3d, cadena)
+        if final_for.tipo == TipoExpresion.ID:
+            
+            temporal_variable_fin = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f't{temporal_variable_fin} = stack[(int) {final_for.posicion}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+            final_for = envFor.getVariable3d(final_for.valor)
+            final_for.valor = f't{temporal_variable_fin}' 
+
+        temporal_final = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+
+
+
+
+        # etiqueta pivotear en el for
+        etiqueta_pivote = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+        etiqueta_true = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+        etiqueta_false = traductor3d.getEtiqueta()
+        traductor3d.aumentarEtiqueta()
+
+
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'/*-------- FOR IN --------*/\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'//CONTADORES DEL FOR IN \n'
+        cadenaTraduccion3d += f't{temporal_inicio} = {inicio_for.valor};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f't{temporal_final} = {final_for.valor};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'\n'        
+        cadenaTraduccion3d += f'L{etiqueta_pivote}:\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f'if ( t{temporal_inicio} < t{temporal_final} )  goto L{etiqueta_true};\n'
+        cadenaTraduccion3d += f'goto L{etiqueta_false};\n'
+        cadenaTraduccion3d += f'L{etiqueta_true}:\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+        cadenaTraduccion3d = ''
+        
+        
+        # instrucciones
+        actualizacion_pivote = ''
+        temporal_actualizacion = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        for instruccion in self.instrucciones:
+            instruccion.optimizar(envFor, traductor3d, cadena)
+
+
+        # por cada paso de instruccion se actualizara la variable pivote
+        variable_pivote_for = envFor.getVariable3d(pivote.valor) 
+        actualizacion_pivote += f'\n'
+        actualizacion_pivote += f'\n'
+        actualizacion_pivote += f'/*---- ACTUALIZACION DE PIVOTE FOR IN ----*/\n'           
+        actualizacion_pivote += f't{temporal_actualizacion} = stack[(int) {variable_pivote_for.posicion}];\n'
+        actualizacion_pivote += f't{temporal_actualizacion} = t{temporal_actualizacion} + 1;\n'
+        actualizacion_pivote += f'stack[(int) {variable_pivote_for.posicion}] = t{temporal_actualizacion};\n'
+        traductor3d.addCadenaTemporal(actualizacion_pivote)
+        actualizacion_pivote = ''
+
+
+
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*---- AUMENTO ----*/\n'
+        cadenaTraduccion3d += f't{temporal_inicio} = t{temporal_inicio} + 1;\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*---- PIVOTE ----*/\n'
+        cadenaTraduccion3d += f'goto L{etiqueta_pivote};\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*--- SALIDA DEL FOR IN ---*/\n'
+        cadenaTraduccion3d += f'L{etiqueta_false}:\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+
+
+        
+
+        traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
+
+
+        
+        return None

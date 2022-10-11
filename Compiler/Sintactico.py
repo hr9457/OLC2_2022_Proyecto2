@@ -2042,6 +2042,36 @@ def traduccir3d(entrada):
 
 
 
+
+
+
+
+# funcion para devolver la traduccion en 3d
+def traduccir3doptimizado(entrada):
+    input = entrada
+    lista = parser.parse(entrada)
+
+    # traductor 3d
+    traductor3d = Environment3d()
+
+    cadena3d = ''
+    
+
+    # entorno principal declarado
+    env = Environment('general', 0, None)
+
+    salida = ''
+    for l in lista:
+        l.optimizar(env, traductor3d, cadena3d)
+
+    traductor3d.cabecera()
+    return traductor3d.getCadena()
+
+
+
+
+
+
 # if __name__ == '__main__':
 #     # Build the parser
 #     # import ply.yacc as yacc
