@@ -420,8 +420,7 @@ class Imprimir(Instruccion):
 
 
 
-
-
+            
             # variable es de tipo FLOAT
             elif variable3d.tipo == TipoExpresion.FLOAT:
                 temporalActual = traductor3d.getTemporal()
@@ -500,6 +499,26 @@ class Imprimir(Instruccion):
                 cadenaTraduccion3d += 'printf("%c", (int)10);\n'  
             
 
+
+            # variable es de tipo ARREGLO
+            elif variable3d.tipo == TipoExpresion.ARREGLO:
+                temporal_actual = traductor3d.getTemporal()
+                traductor3d.aumentarTemporal()
+                # colocar posicion en una termporal
+                cadenaTraduccion3d += f'\n'
+                cadenaTraduccion3d += f'/*------ IMPRESION VARIABLE --------*/\n'
+                cadenaTraduccion3d += f't{temporal_actual} = {variable3d.posicion};\n'
+                cadenaTraduccion3d += f'\n'
+
+                # buscarel valor en la posicion
+                cadenaTraduccion3d += f't{temporal_actual} = stack[(int) t{temporal_actual}];\n'
+                cadenaTraduccion3d += f't11 = t{temporal_actual};\n'
+                cadenaTraduccion3d += f'\n'
+                cadenaTraduccion3d += '/*--------- IMPRESION DE UN ARREGLO -----------*/\n'
+                cadenaTraduccion3d += 'printArreglo();\n'
+                cadenaTraduccion3d += '\n'  
+                cadenaTraduccion3d += 'printf("%c", (int)10);\n'  
+                
 
             # *********************************************
             return cadenaTraduccion3d
@@ -780,6 +799,42 @@ class Imprimir(Instruccion):
 
 
 
+
+
+
+    def imprimirArreglo3d(self, traductor3d, resultado):
+        cadenaTraduccion3d = ''
+
+        temporal_posicion = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+        temporal_heap = traductor3d.getTemporal()
+        traductor3d.aumentarTemporal()
+
+
+        # ************ traduccion ******************
+        # guardo va iniciar el arreglo en el stack
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '/*--------- MOVIMIENTOS PARA UN ARREGLO ------------*/\n'
+        cadenaTraduccion3d += f't{temporal_posicion} = {resultado};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += f't{temporal_heap} = heap[(int) t{temporal_posicion}];\n'
+        cadenaTraduccion3d += f'\n'
+
+
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += '/*--------- IMPRESION DE UN STRING -----------*/\n'
+        cadenaTraduccion3d += f't11 = t{temporal_heap};\n'
+        cadenaTraduccion3d += f'\n'
+        cadenaTraduccion3d += 'printArreglo();\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        cadenaTraduccion3d += '\n'
+        # cadenaTraduccion3d += '//SALTO DE LINEA'  
+        # cadenaTraduccion3d += 'printf("%c", (int)10);\n'
+
+        return cadenaTraduccion3d           
+        # ******************************************
 
 
 

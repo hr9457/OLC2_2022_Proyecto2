@@ -1054,6 +1054,7 @@ fn main(){
 
     let mut arr1: [i64; 5] = [25, 2, 17, 30, 1];
 
+    println!(arr1);
 
     let a = arr1[0];
 

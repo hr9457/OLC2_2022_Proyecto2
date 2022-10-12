@@ -4,7 +4,7 @@ class Environment3d:
 
 
     def __init__(self):
-        self.temporal = 11
+        self.temporal = 16
         self.etiqueta = 0
         self.punteroStack = 0
         self.punteroHeap = 0
@@ -161,6 +161,35 @@ class Environment3d:
         self.traduccion += '\n'
         self.traduccion += '    //respuesta almacena en t6\n'
         self.traduccion += '}\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
+        self.traduccion += '\n'
+        self.traduccion += 'void printArreglo(){\n'
+        self.traduccion += '    /*------(tamanio del arreglo)------*/\n'
+        self.traduccion += '    t12 = t11;\n'
+        self.traduccion += '    t12 = heap[(int)t12];\n'
+        self.traduccion += '\n'
+        self.traduccion += '    /*------(inicio del arreglo)------*/\n'
+        self.traduccion += '    t13 = t11 + 1;\n'
+        self.traduccion += '    t14 = heap[(int)t13];\n'
+        self.traduccion += '\n'
+        self.traduccion += '    /*------(contador del for)------*/\n'
+        self.traduccion += '    t15 = 0;\n'
+        self.traduccion += '    printf("%c", 91);\n'
+        self.traduccion += '    IMPRIMIR_ARRELGO:\n'
+        self.traduccion += '       if(t15 >= t12) goto FIN_IMPRIMIR_ARREGLO;\n'
+        self.traduccion += '        printf("%d",(int)t14);\n'
+        self.traduccion += '        printf("%c", 32);\n'
+        self.traduccion += '\n'
+        self.traduccion += '        t13 = t13 + 1;\n'
+        self.traduccion += '        t14 = heap[(int)t13];\n'
+        self.traduccion += '        t15 = t15 + 1;\n'
+        self.traduccion += '        goto IMPRIMIR_ARRELGO;\n'
+        self.traduccion += '        FIN_IMPRIMIR_ARREGLO:\n'
+        self.traduccion += '        printf("%c", 93);\n'
+        self.traduccion += '        return;\n'
+        self.traduccion += '}\n'       
         self.traduccion += '\n'
         self.traduccion += '\n'
         self.traduccion += '\n'
