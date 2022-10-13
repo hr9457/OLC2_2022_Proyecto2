@@ -289,9 +289,33 @@ class Relacional(Expresion):
         # verificacion si algun nodod que sube es una variable para buscar su valoe en el entorno
         if nodoIzquierdo.tipo == TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
 
-
             nodoIzquierdo = entorno.getVariable3d(nodoIzquierdo.valor)
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
+
+
+            temporal_izquierdo = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            temporal_derecho = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            traduccion = ''
+            traduccion += f'\n'
+            traduccion += f't{temporal_izquierdo} = {nodoIzquierdo.posicion};\n'
+            traduccion += f't{temporal_izquierdo} = stack[(int) t{temporal_izquierdo}];\n'
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traduccion += f't{temporal_derecho} = {nodoDerecho.posicion};\n'
+            traduccion += f't{temporal_derecho} = stack[(int) t{temporal_derecho}];\n'
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traductor3d.addCadenaTemporal(traduccion)
+            
+            nodoDerecho.valor = f't{temporal_derecho}'
+            nodoIzquierdo.valor = f't{temporal_izquierdo}'
+
+
 
 
         elif nodoIzquierdo.tipo == TipoExpresion.ID and nodoDerecho.tipo != TipoExpresion.ID:
@@ -310,8 +334,20 @@ class Relacional(Expresion):
 
         elif nodoIzquierdo.tipo != TipoExpresion.ID and nodoDerecho.tipo == TipoExpresion.ID:
 
-
             nodoDerecho = entorno.getVariable3d(nodoDerecho.valor)
+
+            temporal_derecho = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            traduccion = ''
+            traduccion += f'\n'
+            traduccion += f't{temporal_derecho} = {nodoDerecho.posicion};\n'
+            traduccion += f't{temporal_derecho} = stack[(int) t{temporal_derecho}];\n'
+            traduccion += f'\n'
+            traduccion += f'\n'
+            traductor3d.addCadenaTemporal(traduccion)
+            
+            nodoDerecho.valor = f't{temporal_derecho}'
 
 
 

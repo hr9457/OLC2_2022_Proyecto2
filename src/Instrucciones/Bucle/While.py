@@ -162,10 +162,17 @@ class While(Instruccion):
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f'\n'
         
+        # si los procesos logicos generaron etiquetas temporales de salida
+        # para saltar al else
+        cadenaTraduccion3d += traductor3d.getSaltosTemporales()
+        traductor3d.clearSaltosTemporales()
 
 
         cadenaTraduccion3d += f'L{etiqueta_else}:\n\n'
 
+
+
+        
 
 
         # *********************** TRADUCCION *********************
