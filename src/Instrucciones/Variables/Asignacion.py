@@ -106,12 +106,30 @@ class Asignacion(Instruccion):
         posicionVariable3d = variable3d.posicion
 
 
-        cadenaTraduccion3d += '\n'
-        cadenaTraduccion3d += '\n'
-        cadenaTraduccion3d += '/*------- ASIGNACION -------- */\n'
-        cadenaTraduccion3d += f'stack[(int){posicionVariable3d}] = {expresion3d.valor};\n'
-        cadenaTraduccion3d += '\n'
-        cadenaTraduccion3d += '\n'
+        if expresion3d.tipo == TipoExpresion.ID:
+            temporal_expresion = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            expresion3d = entorno.getVariable3d(expresion3d.valor)
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------- ASIGNACION -------- */\n'
+            cadenaTraduccion3d += f't{temporal_expresion} = {expresion3d.posicion};\n'
+            cadenaTraduccion3d += f't{temporal_expresion} = stack[(int) t{temporal_expresion}];\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += f'stack[(int){posicionVariable3d}] = t{temporal_expresion};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            print(0)
+
+        else:
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------- ASIGNACION -------- */\n'
+            cadenaTraduccion3d += f'stack[(int){posicionVariable3d}] = {expresion3d.valor};\n'
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '\n'
 
 
 

@@ -106,11 +106,11 @@ class Aplicacion:
         self.textAreaSalida.insert(1.0,result3d)
 
 
-        print('OPTIMIZAR EN 3d')
-        entrada = self.textAreaEntrada.get(1.0,END)
-        result3d = Sintactico.traduccir3doptimizado(entrada)
-        self.txtAreaOptimizacion.delete(1.0,END)
-        self.txtAreaOptimizacion.insert(1.0,result3d)
+        # print('OPTIMIZAR EN 3d')
+        # entrada = self.textAreaEntrada.get(1.0,END)
+        # result3d = Sintactico.traduccir3doptimizado(entrada)
+        # self.txtAreaOptimizacion.delete(1.0,END)
+        # self.txtAreaOptimizacion.insert(1.0,result3d)
 
 
 

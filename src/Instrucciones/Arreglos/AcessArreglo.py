@@ -280,9 +280,14 @@ class AcessArreglo(Expresion):
             etiqueta_continuar = traductor3d.getEtiqueta()
             traductor3d.aumentarEtiqueta()
 
+            temporal_tamanio = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
             cadenaTraduccion3d += f'\n'
+            # este es el tamanio del arreglo
+            cadenaTraduccion3d += f't{temporal_tamanio} = heap[(int) t{temporal_heap}];\n'
             cadenaTraduccion3d += f'\n'
-            cadenaTraduccion3d += f'if ( {index_acceso.valor} > t{temporal_heap} ) goto L{etiqueta_salida};\n'
+            cadenaTraduccion3d += f'if ( {index_acceso.valor} > t{temporal_tamanio} ) goto L{etiqueta_salida};\n'
             cadenaTraduccion3d += f'goto L{etiqueta_continuar};\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'L{etiqueta_salida}:\n'
