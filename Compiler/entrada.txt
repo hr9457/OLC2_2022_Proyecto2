@@ -592,7 +592,11 @@ fn main() {
 
 
 
-
+fn main() {
+    let bo1: bool = false;
+    let bol21: bool = !bo1;
+    println!(bo1);
+}
 
 
 
@@ -967,23 +971,7 @@ fn main(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// FUNCIONES 2
 
 fn sumar(a : i64, b : i64){
     return a + b;
@@ -1006,6 +994,10 @@ fn main(){
     let c = a + b;
     println!(c);
 }
+
+
+
+
 
 
 
@@ -1200,10 +1192,12 @@ fn ordInsercion(arr3: &mut [i64]) {
 
 
 
+
+
 fn main(){
 
     let mut arr: [i64; 5] = [25, 2, 17, 30, 1];
-    ordIntercambio(arr1);
+    ordIntercambio(arr);
 	println!(arr);
 
 
@@ -1215,6 +1209,25 @@ fn main(){
     let mut arr3: [i64; 4] = [90, 3, 40, 10];
     ordInsercion(arr3);
     println!(arr3);
+
+}
+
+
+
+
+
+
+
+fn main(){
+
+    let mut arr: [i64; 5] = [25, 2, 17, 30, 1];
+    ordIntercambio(arr);
+	println!(arr);
+
+
+    let mut arr2: [i64; 10] = [5, 20, 8, 17, 65, 2, 40, 4, 35, 90];
+    ordSeleccion(arr2);
+    println!(arr2);
 
 }
 
