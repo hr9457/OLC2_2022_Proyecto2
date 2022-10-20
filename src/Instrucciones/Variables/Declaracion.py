@@ -254,7 +254,10 @@ class Declaracion(Instruccion):
         # self.valor = valor de la variable
         # obtener el valor del simbolo para hacer la asginacion de la variable
         resultado = self.valor.traducir(entorno, traductor3d, cadena)
-        
+
+
+
+                
 
         
         # tipo del simbolo --> INTEGER o FLOAT
@@ -447,10 +450,18 @@ class Declaracion(Instruccion):
             entorno.addVariable3d(self.identificador, variable_arreglo)
 
 
+            
+            
+
+
             # **********************************************
             #               TRADUCCION     
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
+        
+        # --------------  para reportes -----------------------
+        self.tablaSimbolos.append([self.identificador,'Variable',resultado.tipo,entorno.nombre,self.fila,self.columna])
+        # --------------------------------------------
 
 
 

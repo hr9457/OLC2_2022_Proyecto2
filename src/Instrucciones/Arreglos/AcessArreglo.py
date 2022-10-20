@@ -298,6 +298,8 @@ class AcessArreglo(Expresion):
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + {index_acceso.valor};\n'
 
 
+
+
         cadenaTraduccion3d += f'\n'
         cadenaTraduccion3d += f't{temporal_indice} = heap[(int) t{temporal_heap}];\n'
         cadenaTraduccion3d += f'\n'
