@@ -22,3 +22,14 @@ class TipoArreglo(Expresion):
         self.tamanioMaxArreglo = valueExp.valor
         self.tipoExpArreglo = valueExp.tipo
         return self
+
+
+
+
+
+    def optimizar(self, entorno):
+
+        valueExp = self.exp.optimizar(entorno)
+        self.tamanioMaxArreglo = valueExp.valor
+        self.tipoExpArreglo = valueExp.tipo
+        return self
