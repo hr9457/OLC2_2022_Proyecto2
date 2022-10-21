@@ -79,8 +79,12 @@ class Aplicacion:
         print('TRADUCCION A 3D')
         entrada = self.textAreaEntrada.get(1.0,END)
         result3d = Sintactico.traduccir3d(entrada)
+
+        self.tablaSimbolos = result3d[1]
+        self.tablaErrores = result3d[2]
+
         self.textAreaSalida.delete(1.0,END)
-        self.textAreaSalida.insert(1.0,result3d)
+        self.textAreaSalida.insert(1.0,result3d[0])
 
 
 
@@ -110,11 +114,11 @@ class Aplicacion:
         self.textAreaSalida.insert(1.0,result3d[0])
 
 
-        # print('OPTIMIZAR EN 3d')
-        # entrada = self.textAreaEntrada.get(1.0,END)
-        # result3d = Sintactico.traduccir3doptimizado(entrada)
-        # self.txtAreaOptimizacion.delete(1.0,END)
-        # self.txtAreaOptimizacion.insert(1.0,result3d)
+        print('OPTIMIZAR EN 3d')
+        entrada = self.textAreaEntrada.get(1.0,END)
+        result3d_optimizado = Sintactico.traduccir3doptimizado(entrada)
+        self.txtAreaOptimizacion.delete(1.0,END)
+        self.txtAreaOptimizacion.insert(1.0,result3d_optimizado)
 
 
 
