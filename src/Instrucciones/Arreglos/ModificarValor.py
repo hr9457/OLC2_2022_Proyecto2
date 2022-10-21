@@ -173,6 +173,9 @@ class ModificarValorArreglo(Instruccion):
 
         arreglo = entorno.getVariable3d(self.variable)
 
+
+        nuevo_valor = self.newValue.traducir(entorno, traductor3d, cadena)
+
         temporal_acceso = traductor3d.getTemporal()
         traductor3d.aumentarTemporal()
 
@@ -190,6 +193,7 @@ class ModificarValorArreglo(Instruccion):
         cadenaTraduccion3d += f'\n'
 
 
+        # solo para ubicarme en la posicion del arreglo que se va modificar
         if self.exp[0].tipo == TipoExpresion.ID:
             variable_expresion = entorno.getVariable3d(self.exp[0].valor)
 
@@ -205,6 +209,7 @@ class ModificarValorArreglo(Instruccion):
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + t{temporal_variable_expresion};\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'\n'
+
         else:
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f't{temporal_heap} = t{temporal_heap} + 1;\n'
@@ -213,15 +218,34 @@ class ModificarValorArreglo(Instruccion):
             cadenaTraduccion3d += f'\n'
 
 
-        if self.newValue.tipo == TipoExpresion.ARREGLO:
-            acceso_arreglo = self.newValue.traducir(entorno, traductor3d, cadena)
-            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {acceso_arreglo.valor};\n'
+        # para obtener el nuevo valor el cual a modidicar el arreglo
+
+        if nuevo_valor.tipo == TipoExpresion.ID:
+            temporal_nuevo_valor = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            nuevo_valor = entorno.getVariable3d(nuevo_valor.valor)
+            cadenaTraduccion3d += f't{temporal_nuevo_valor} = {nuevo_valor.posicion};\n'
+            cadenaTraduccion3d += f't{temporal_nuevo_valor} = stack[(int) t{temporal_nuevo_valor}];\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = t{temporal_nuevo_valor};\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'\n'
+
         else:
-            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {self.newValue.valor};\n'
+            cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {nuevo_valor.valor};\n'
             cadenaTraduccion3d += f'\n'
             cadenaTraduccion3d += f'\n'
+
+        # if self.newValue.tipo == TipoExpresion.ARREGLO:
+        #     acceso_arreglo = self.newValue.traducir(entorno, traductor3d, cadena)
+        #     cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {acceso_arreglo.valor};\n'
+        #     cadenaTraduccion3d += f'\n'
+        #     cadenaTraduccion3d += f'\n'
+        # else:
+        #     cadenaTraduccion3d += f'heap[(int) t{temporal_heap}] = {self.newValue.valor};\n'
+        #     cadenaTraduccion3d += f'\n'
+        #     cadenaTraduccion3d += f'\n'
 
 
         # **********************************************
