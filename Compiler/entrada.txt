@@ -1292,3 +1292,55 @@ fn main() {
     let val21 = (2 * 9 * 2 * 2) - 9 - (8 - 16 + (3 * 3 - 6 * 5 - 7 - (9 + 7 * 7 * 7) + 10) - 5) + 8 - (6 - 5 * (2 * 3));
     let val31 = val11 + ((2 + val21 * 3) + 1 - ((2 * 2 * 2) - 2) * 2) - 2; 
 }
+
+
+
+
+fn main() {
+	
+    let val11 = (3 + 3) +  5 + (3 + 3);
+}
+
+
+// EQUIVALENTE EN 3D
+// pila y dict
+
+t16 = 3 + 3 ;
+t17 = t16 + 5 ;
+t18 = 3 + 3 ;
+t19 = t17 + t18 ;
+
+
+
+
+
+
+
+// manera local 
+
+// deberia aplicar regla 1
+
+fn main() {
+	
+    let val11 = 10 - (5 * (9 + 4 * (1 + 2 * 3)) - 2 * 3 * 6) + 5 * (2 * 2);
+
+}
+
+
+
+fn main() {
+	
+    let a = 5;
+    let b = a;
+    let c = a + b;
+}
+
+
+
+
+fn main() {
+	
+    let a = 5;
+    let b = 2;
+    let c = a + b;
+}
