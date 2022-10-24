@@ -67,3 +67,40 @@ class Funciones(Instruccion):
 
 
 
+
+
+
+
+
+
+
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
+    def optimizar(self, entorno, traductor3d, cadena):
+
+
+
+        cantidad_parametros = len(self.listaParametros)
+
+
+        # transformar la funcione en formato 3d
+        funcion3d = Funcion3d(
+            self.fila,
+            self.columna,
+            self.nombreFuncion,
+            self.listaParametros,
+            self.listaInstrucciones,
+            self.tipoFuncion,
+            cantidad_parametros
+        )
+        
+
+        # agregar al entorno con toda su estructura
+        entorno.addFuncion3D(self.nombreFuncion, funcion3d)
+
+
+        return None
+
+
+

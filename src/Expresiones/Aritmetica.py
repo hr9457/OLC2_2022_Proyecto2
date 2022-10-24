@@ -11,7 +11,7 @@ from src.Error.Error import Error
 
 from src.environment.Simbolo3d import Simbolo3d
 
-
+import re
 
 # clase para manejar las sumas
 class Aritmetica(Expresion):
@@ -210,7 +210,8 @@ class Aritmetica(Expresion):
         nodoIzquierdo = self.leftExp.traducir(entorno, traductor3d, cadena)
         nodoDerecho = self.rigthExp.traducir(entorno, traductor3d, cadena)
 
-
+        print(isinstance(nodoIzquierdo.valor, int))
+        print(isinstance(nodoDerecho.valor, int))
 
 
         # VERIFICACION DE LOS NODOS SI SON TIPO ID Y HAY QUE BUSCARLOS EN EL STACK

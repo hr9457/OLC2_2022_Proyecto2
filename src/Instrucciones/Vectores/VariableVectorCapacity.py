@@ -36,3 +36,12 @@ class VariableVectorCapacity:
         entorno.addVariable(self.identificador, self)
 
         return None
+
+
+
+    
+    def traducir(self, entorno, traductor3d, cadena):
+
+        
+
+        return None
