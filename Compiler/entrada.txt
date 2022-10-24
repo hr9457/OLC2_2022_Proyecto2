@@ -1344,3 +1344,9 @@ fn main() {
     let b = 2;
     let c = a + b;
 }
+
+
+fn main() {
+	
+    let a = 5 + 2;
+}

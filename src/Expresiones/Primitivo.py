@@ -6,6 +6,8 @@ from src.Interfaces.TipoExpresion import TipoExpresion
 from src.environment.Simbolo import Simbolo
 from src.environment.Simbolo3d import Simbolo3d
 
+import re
+
 # clse para manejar numero primitivos
 class Primitivo(Expresion):
 
@@ -36,6 +38,10 @@ class Primitivo(Expresion):
 
     # retorno para traduccion en 3d
     def traducir(self, entorno, traductor3d, cadena):
+
+        # sub_cadena = re.search(r"\d", "2")
+        # print(self.valor)
+        # print(type(self.valor))
 
         if self.tipo == TipoExpresion.STRING:
             return Simbolo3d(
