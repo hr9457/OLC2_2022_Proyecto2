@@ -136,7 +136,19 @@ class Logico(Expresion):
                     variable3d = entorno.getVariable3d(nodo.valor)
 
                     # nodo con la copia para retornar
-                    nodo_retorno = variable3d
+                    # nodo_retorno = variable3d
+
+                    nodo_retorno = Simbolo3d(
+                        variable3d.fila,
+                        variable3d.columna,
+                        variable3d.identificador,
+                        variable3d.tipo,
+                        variable3d.valor,
+                        variable3d.mutabilidad,
+                        variable3d.posicion,
+                        variable3d.tamanio
+
+                    )
 
                     # cambio de valor
                     if nodo_retorno.valor == '0':
@@ -377,7 +389,18 @@ class Logico(Expresion):
                     variable3d = entorno.getVariable3d(nodo.valor)
 
                     # nodo con la copia para retornar
-                    nodo_retorno = variable3d
+                    nodo_retorno = Simbolo3d(
+                        variable3d.fila,
+                        variable3d.columna,
+                        variable3d.identificador,
+                        variable3d.tipo,
+                        variable3d.valor,
+                        variable3d.mutabilidad,
+                        variable3d.posicion,
+                        variable3d.tamanio
+
+                    )
+
 
                     # cambio de valor
                     if nodo_retorno.valor == '0':
