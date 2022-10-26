@@ -17,7 +17,7 @@ import re
 class Aritmetica(Expresion):
 
     # constructor usando el constructor de la clase Nodo
-    def __init__(self, fila, columna,lefExp, operador ,rigthExp, tabla_errores):
+    def __init__(self, fila, columna,lefExp, operador ,rigthExp, tabla_errores, tablaOptimizacion):
         self.fila = fila 
         self.columna = columna
         self.leftExp = lefExp
@@ -25,6 +25,8 @@ class Aritmetica(Expresion):
         self.rigthExp = rigthExp
         self.tipo = None
         self.tablaErrores = tabla_errores
+        self.tablaOptimizacion = tablaOptimizacion
+
 
     def ejecutar(self, entorno):
 
@@ -780,6 +782,7 @@ class Aritmetica(Expresion):
         nodoDerecho = self.rigthExp.optimizar(entorno, traductor3d, cadena)
 
 
+        
 
 
         # VERIFICACION DE LOS NODOS SI SON TIPO ID Y HAY QUE BUSCARLOS EN EL STACK
@@ -833,7 +836,7 @@ class Aritmetica(Expresion):
 
 
 
-
+       
 
         
         
@@ -858,6 +861,15 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} + {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} + {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} + {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,
@@ -886,6 +898,15 @@ class Aritmetica(Expresion):
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} - {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} - {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
+
                     return Simbolo3d(
                         self.fila,
                         self.columna,
@@ -913,6 +934,15 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} * {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} * {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} * {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,
@@ -952,6 +982,15 @@ class Aritmetica(Expresion):
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} / {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} / {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
+
                     return Simbolo3d(
                         self.fila,
                         self.columna,
@@ -980,6 +1019,14 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} % {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,
@@ -1017,6 +1064,14 @@ class Aritmetica(Expresion):
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} + {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} + {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
+
                     return Simbolo3d(
                         self.fila,
                         self.columna,
@@ -1043,6 +1098,15 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} - {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} - {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} - {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,
@@ -1071,6 +1135,14 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} * {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} * {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} * {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,
@@ -1110,6 +1182,15 @@ class Aritmetica(Expresion):
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
 
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} / {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} / {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
+
                     return Simbolo3d(
                         self.fila,
                         self.columna,
@@ -1137,6 +1218,15 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+
+                    # --------------  para reportes -----------------------
+                    if isinstance(nodoIzquierdo.valor, int) and isinstance(nodoDerecho.valor, int):
+                        temporal_reporte = traductor3d.getTemporal() - 2
+                        original = f'<br>t{temporal_reporte} = {resultadoNodoIzquierdo};</br> t{temporalActual} = t{temporal_reporte} % {resultadoNodoDerecho} ;\n'
+                        optimizada = f't{temporalActual} = {resultadoNodoIzquierdo} % {resultadoNodoDerecho} ;\n'
+                        self.tablaOptimizacion.append(['Bloque','Regla 4',original,optimizada, self.fila])
+                    # --------------------------------------------
 
                     return Simbolo3d(
                         self.fila,

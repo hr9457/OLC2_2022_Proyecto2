@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 from app.TablaSimbolos import *
 from app.Errores import *
+from app.optimizacion import *
 
 
 # Importacion del Analizador
@@ -27,6 +28,7 @@ class Aplicacion:
         # utilidades para generar reportes
         self.tablaSimbolos = []
         self.tablaErrores = []
+        self.tablaOptimizacion = []
 
 
         # llamado al menu principal
@@ -117,8 +119,11 @@ class Aplicacion:
         print('OPTIMIZAR EN 3d')
         entrada = self.textAreaEntrada.get(1.0,END)
         result3d_optimizado = Sintactico.traduccir3doptimizado(entrada)
+
+        self.tablaOptimizacion = result3d_optimizado[1]
+
         self.txtAreaOptimizacion.delete(1.0,END)
-        self.txtAreaOptimizacion.insert(1.0,result3d_optimizado)
+        self.txtAreaOptimizacion.insert(1.0,result3d_optimizado[0])
 
 
 
@@ -147,6 +152,9 @@ class Aplicacion:
 
 
 
+    def reporte_optimizacion(self):
+        print('Generacion de reporte de optimizacion')
+        reporteOptimizacion(self.tablaOptimizacion)
 
 
     def tablaBD(self):
@@ -172,7 +180,7 @@ class Aplicacion:
         subMenuReportes = Menu(menuPrincipal, tearoff=False)
         subMenuReportes.add_command(label='Tabla Simbolos', command=self.tablaSimbolo)
         subMenuReportes.add_command(label='Tabla de Errores', command=self.reporteSemantico)
-        subMenuReportes.add_command(label='Tabla BD', command=self.tablaBD)
+        subMenuReportes.add_command(label='Optimizacion', command=self.reporte_optimizacion)
 
         menuPrincipal.add_cascade(menu=subMenuArchivo, label='Archivo')
         menuPrincipal.add_cascade(menu=subMenuReportes, label='Reportes')
