@@ -254,7 +254,10 @@ class Declaracion(Instruccion):
         # self.valor = valor de la variable
         # obtener el valor del simbolo para hacer la asginacion de la variable
         resultado = self.valor.traducir(entorno, traductor3d, cadena)
-        
+
+
+
+                
 
         
         # tipo del simbolo --> INTEGER o FLOAT
@@ -281,7 +284,7 @@ class Declaracion(Instruccion):
 
 
 
-        # menajeo de variables tipo --> CHAR
+                # menajeo de variables tipo --> CHAR
         elif resultado.tipo == TipoExpresion.CHAR:
             cadenaTraduccion3d += '\n'
             cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
@@ -384,6 +387,41 @@ class Declaracion(Instruccion):
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
 
+        elif resultado.tipo == TipoExpresion.ID:
+            
+            variable_3d = entorno.getVariable3d(resultado.valor)
+
+            temporal_variable3d = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            posicion_stack = traductor3d.getStack()
+            traductor3d.aumentarStack()
+
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+            cadenaTraduccion3d += f't{temporal_variable3d} = {variable_3d.posicion} ;\n'
+            cadenaTraduccion3d += f't{temporal_variable3d} = stack[(int) t{temporal_variable3d}];\n'
+            cadenaTraduccion3d += f'stack[(int) t{posicion_stack}] = t{temporal_variable3d};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+            nueva_variable3d = Simbolo3d(
+                variable_3d.fila,
+                variable_3d.columna,
+                variable_3d.identificador,
+                variable_3d.tipo,
+                variable_3d.valor,
+                variable_3d.mutabilidad,
+                posicion_stack,
+                variable_3d.tamanio
+            )
+            entorno.addVariable3d(self.identificador, nueva_variable3d)
+
+            # **********************************************
+            #               TRADUCCION
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
+
 
 
 
@@ -447,10 +485,18 @@ class Declaracion(Instruccion):
             entorno.addVariable3d(self.identificador, variable_arreglo)
 
 
+            
+            
+
+
             # **********************************************
             #               TRADUCCION     
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
+        
+        # --------------  para reportes -----------------------
+        self.tablaSimbolos.append([self.identificador,'Variable',resultado.tipo,entorno.nombre,self.fila,self.columna])
+        # --------------------------------------------
 
 
 
@@ -685,6 +731,43 @@ class Declaracion(Instruccion):
             #               TRADUCCION     
             traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
+
+
+
+        elif resultado.tipo == TipoExpresion.ID:
+            
+            variable_3d = entorno.getVariable3d(resultado.valor)
+
+            temporal_variable3d = traductor3d.getTemporal()
+            traductor3d.aumentarTemporal()
+
+            posicion_stack = traductor3d.getStack()
+            traductor3d.aumentarStack()
+
+            cadenaTraduccion3d += '\n'
+            cadenaTraduccion3d += '/*------ DECLARACION --------*/\n'
+            cadenaTraduccion3d += f't{temporal_variable3d} = {variable_3d.posicion} ;\n'
+            cadenaTraduccion3d += f't{temporal_variable3d} = stack[(int) t{temporal_variable3d}];\n'
+            cadenaTraduccion3d += f'stack[(int) t{posicion_stack}] = t{temporal_variable3d};\n'
+            cadenaTraduccion3d += f'\n'
+            cadenaTraduccion3d += f'\n'
+
+
+            nueva_variable3d = Simbolo3d(
+                variable_3d.fila,
+                variable_3d.columna,
+                variable_3d.identificador,
+                variable_3d.tipo,
+                variable_3d.valor,
+                variable_3d.mutabilidad,
+                posicion_stack,
+                variable_3d.tamanio
+            )
+            entorno.addVariable3d(self.identificador, nueva_variable3d)
+
+            # **********************************************
+            #               TRADUCCION
+            traductor3d.addCadenaTemporal(cadenaTraduccion3d)
 
 
 

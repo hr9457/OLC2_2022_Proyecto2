@@ -592,6 +592,11 @@ fn main() {
 
 
 
+fn main() {
+    let bo1: bool = false;
+    let bol21: bool = !bo1;
+    println!(bo1);
+}
 
 
 
@@ -606,9 +611,9 @@ fn main() {
 
 
 
-
-
-
+// **************************************************************************************************************
+// ***************************************   PUREBAS PARA CODIGO EN 3D    ***************************************
+// **************************************************************************************************************
 
 
 
@@ -967,23 +972,7 @@ fn main(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// FUNCIONES 2
 
 fn sumar(a : i64, b : i64){
     return a + b;
@@ -1006,6 +995,10 @@ fn main(){
     let c = a + b;
     println!(c);
 }
+
+
+
+
 
 
 
@@ -1200,10 +1193,12 @@ fn ordInsercion(arr3: &mut [i64]) {
 
 
 
+
+
 fn main(){
 
     let mut arr: [i64; 5] = [25, 2, 17, 30, 1];
-    ordIntercambio(arr1);
+    ordIntercambio(arr);
 	println!(arr);
 
 
@@ -1215,6 +1210,25 @@ fn main(){
     let mut arr3: [i64; 4] = [90, 3, 40, 10];
     ordInsercion(arr3);
     println!(arr3);
+
+}
+
+
+
+
+
+
+
+fn main(){
+
+    let mut arr: [i64; 5] = [25, 2, 17, 30, 1];
+    ordIntercambio(arr);
+	println!(arr);
+
+
+    let mut arr2: [i64; 10] = [5, 20, 8, 17, 65, 2, 40, 4, 35, 90];
+    ordSeleccion(arr2);
+    println!(arr2);
 
 }
 
@@ -1255,3 +1269,84 @@ fn main() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// OPTIMIZACION
+
+
+
+fn main() {
+	
+    let val11 = 10 - (5 + 10 * (9 + 4 * (1 + 2 * 3)) - 8 * 3 * 6) + 5 * (2 * 2);
+    let val21 = (2 * 9 * 2 * 2) - 9 - (8 - 16 + (3 * 3 - 6 * 5 - 7 - (9 + 7 * 7 * 7) + 10) - 5) + 8 - (6 - 5 * (2 * 3));
+    let val31 = val11 + ((2 + val21 * 3) + 1 - ((2 * 2 * 2) - 2) * 2) - 2; 
+}
+
+
+
+
+fn main() {
+	
+    let val11 = (3 + 3) +  5 + (3 + 3);
+}
+
+
+// EQUIVALENTE EN 3D
+// pila y dict
+
+t16 = 3 + 3 ;
+t17 = t16 + 5 ;
+t18 = 3 + 3 ;
+t19 = t17 + t18 ;
+
+
+
+
+
+
+
+// manera local 
+
+// deberia aplicar regla 1
+
+fn main() {
+	
+    let val11 = 10 - (5 * (9 + 4 * (1 + 2 * 3)) - 2 * 3 * 6) + 5 * (2 * 2);
+
+}
+
+
+
+fn main() {
+	
+    let a = 5;
+    let b = a;
+    let c = a + b;
+}
+
+
+
+
+fn main() {
+	
+    let a = 5;
+    let b = 2;
+    let c = a + b;
+}
+
+
+fn main() {
+	
+    let a = 5 + 2;
+}

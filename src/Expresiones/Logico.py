@@ -129,19 +129,25 @@ class Logico(Expresion):
             if self.operador == TipoLogico.NOT:
                 nodo = self.leftExp.traducir(entorno, traductor3d, cadena)
 
+                
+
                 # 1. que lo que queramos negar sea una variable
                 if nodo.tipo == TipoExpresion.ID:
                     variable3d = entorno.getVariable3d(nodo.valor)
 
+                    # nodo con la copia para retornar
+                    nodo_retorno = variable3d
+
                     # cambio de valor
-                    if variable3d.valor == '0':
-                        variable3d.valor = '1'
-                    elif variable3d.valor == '1':
-                        variable3d.valor = '0'
+                    if nodo_retorno.valor == '0':
+                        nodo_retorno.valor = '1'
+                    elif nodo_retorno.valor == '1':
+                        nodo_retorno.valor = '0'
 
+                    
 
-                    entorno.addVariable3d(nodo.valor,variable3d)
-                    return variable3d
+                    # entorno.addVariable3d(nodo.valor,variable3d)
+                    return nodo_retorno
 
 
                 else:
@@ -370,15 +376,19 @@ class Logico(Expresion):
                 if nodo.tipo == TipoExpresion.ID:
                     variable3d = entorno.getVariable3d(nodo.valor)
 
+                    # nodo con la copia para retornar
+                    nodo_retorno = variable3d
+
                     # cambio de valor
-                    if variable3d.valor == '0':
-                        variable3d.valor = '1'
-                    elif variable3d.valor == '1':
-                        variable3d.valor = '0'
+                    if nodo_retorno.valor == '0':
+                        nodo_retorno.valor = '1'
+                    elif nodo_retorno.valor == '1':
+                        nodo_retorno.valor = '0'
 
+                    
 
-                    entorno.addVariable3d(nodo.valor,variable3d)
-                    return variable3d
+                    # entorno.addVariable3d(nodo.valor,variable3d)
+                    return nodo_retorno
 
 
                 else:

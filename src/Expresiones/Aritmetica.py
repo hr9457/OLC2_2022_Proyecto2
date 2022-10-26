@@ -11,20 +11,20 @@ from src.Error.Error import Error
 
 from src.environment.Simbolo3d import Simbolo3d
 
-
+import re
 
 # clase para manejar las sumas
 class Aritmetica(Expresion):
 
     # constructor usando el constructor de la clase Nodo
-    def __init__(self, fila, columna,lefExp, operador ,rigthExp):
+    def __init__(self, fila, columna,lefExp, operador ,rigthExp, tabla_errores):
         self.fila = fila 
         self.columna = columna
         self.leftExp = lefExp
         self.operador = operador
         self.rigthExp = rigthExp
         self.tipo = None
-        # self.tablaErrores = tablaErrores
+        self.tablaErrores = tabla_errores
 
     def ejecutar(self, entorno):
 
@@ -210,7 +210,8 @@ class Aritmetica(Expresion):
         nodoIzquierdo = self.leftExp.traducir(entorno, traductor3d, cadena)
         nodoDerecho = self.rigthExp.traducir(entorno, traductor3d, cadena)
 
-
+        print(isinstance(nodoIzquierdo.valor, int))
+        print(isinstance(nodoDerecho.valor, int))
 
 
         # VERIFICACION DE LOS NODOS SI SON TIPO ID Y HAY QUE BUSCARLOS EN EL STACK
@@ -382,6 +383,14 @@ class Aritmetica(Expresion):
                     cadenaTraduccion3d += f'L{etiqueta_salida}:\n'
                     traductor3d.addCadenaTemporal(cadenaTraduccion3d)
                     traductor3d.aumentarTemporal()
+
+
+                    if isinstance(resultadoNodoDerecho, str):
+                        print('**************************************** DIVISION POR CERO ')
+                        print(resultadoNodoDerecho)
+                        # # para reportes
+                        # self.tablaErrores.append(['MathError : division por 0',entorno.nombre,self.fila,self.columna])
+                        # # --------------------------------
 
                     return Simbolo3d(
                         self.fila,
