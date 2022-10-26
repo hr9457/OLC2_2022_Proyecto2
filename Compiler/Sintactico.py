@@ -107,6 +107,7 @@ from src.Error.Error import Error
 # manejo de reporteria
 tablaSimbolos = []
 tablaErrores = []
+tablaOptimizacion = []
 
 
 
@@ -1626,23 +1627,23 @@ def p_aritmetica(p):
 
     if p[2] == '+':
         # p[0] = p[1] + p[3]
-        p[0] = Aritmetica(0, 0,  p[1], TipoOperador.MAS ,p[3], tablaErrores)
+        p[0] = Aritmetica(p.lineno(2), 0,  p[1], TipoOperador.MAS ,p[3], tablaErrores, tablaOptimizacion)
 
     elif p[2] == '-':
         # p[0] = p[1] - p[3]
-        p[0] = Aritmetica(0, 0,  p[1], TipoOperador.MENOS ,p[3], tablaErrores)
+        p[0] = Aritmetica(p.lineno(2), 0,  p[1], TipoOperador.MENOS ,p[3], tablaErrores, tablaOptimizacion)
 
     elif p[2] == '*':
         # p[0] = p[1] * p[3]
-        p[0] = Aritmetica(0, 0,  p[1], TipoOperador.POR, p[3], tablaErrores)
+        p[0] = Aritmetica(p.lineno(2), 0,  p[1], TipoOperador.POR, p[3], tablaErrores, tablaOptimizacion)
         
     elif p[2] == '/':
         # p[0] = p[1] / p[3]
-        p[0] = Aritmetica(0, 0,  p[1], TipoOperador.DIV, p[3], tablaErrores)
+        p[0] = Aritmetica(p.lineno(2), 0,  p[1], TipoOperador.DIV, p[3], tablaErrores, tablaOptimizacion)
 
     elif p[2] == '%':
         # p[0] = p[1] % p[3]
-        p[0] = Aritmetica(0, 0, p[1], TipoOperador.PORCENTAJE, p[3], tablaErrores)
+        p[0] = Aritmetica(p.lineno(2), 0, p[1], TipoOperador.PORCENTAJE, p[3], tablaErrores, tablaOptimizacion)
 
 
     elif p[2] == '>':
@@ -2057,7 +2058,7 @@ def traduccir3doptimizado(entrada):
     traductor3d = Environment3d()
 
     cadena3d = ''
-    
+    tablaOptimizacion.clear()
 
     # entorno principal declarado
     env = Environment('general', 0, None)
@@ -2067,7 +2068,7 @@ def traduccir3doptimizado(entrada):
         l.optimizar(env, traductor3d, cadena3d)
 
     traductor3d.cabecera()
-    return traductor3d.getCadena()
+    return traductor3d.getCadena(), tablaOptimizacion
 
 
 

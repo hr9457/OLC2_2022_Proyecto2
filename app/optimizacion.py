@@ -15,7 +15,7 @@ def reporteOptimizacion(tabla):
     </head>
     <body>            
     
-    <h1>TALBA DE SIMBOLOS</h1>
+    <h1>TALBA DE OPTIMIZACION</h1>
     ''')
 
     # creacion de la tabla de reportes

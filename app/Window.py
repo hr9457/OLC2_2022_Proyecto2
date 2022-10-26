@@ -119,8 +119,11 @@ class Aplicacion:
         print('OPTIMIZAR EN 3d')
         entrada = self.textAreaEntrada.get(1.0,END)
         result3d_optimizado = Sintactico.traduccir3doptimizado(entrada)
+
+        self.tablaOptimizacion = result3d_optimizado[1]
+
         self.txtAreaOptimizacion.delete(1.0,END)
-        self.txtAreaOptimizacion.insert(1.0,result3d_optimizado)
+        self.txtAreaOptimizacion.insert(1.0,result3d_optimizado[0])
 
 
 
