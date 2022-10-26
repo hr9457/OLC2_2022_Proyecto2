@@ -1,5 +1,8 @@
 
 
+from Compiler.Sintactico import p_asignacion_variables
+
+
 class Environment3d:
 
 
@@ -18,6 +21,8 @@ class Environment3d:
         self.saltoRetun = ''
         self.satoLogicoTrue = ''
         self.saltoReturn = ''
+        # optimizacion
+        self.tabla_optimizacion = []
 
 
     
@@ -456,3 +461,14 @@ class Environment3d:
 
 
     
+
+    # # *********************************************
+    # # Vector con las reglas optimizacion
+
+    # # vector con las reglas ya aplicadas
+    # def add_reporte_optimizacion(self,tipo, regla, orginal, optimizada, fila):
+    #     self.tabla_optimizacion.append([tipo,regla, orginal, optimizada, fila])
+
+
+    # def get_reporte_optimizacion(self):
+    #     return self.tabla_optimizacion

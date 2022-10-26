@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 from app.TablaSimbolos import *
 from app.Errores import *
+from app.optimizacion import *
 
 
 # Importacion del Analizador
@@ -27,6 +28,7 @@ class Aplicacion:
         # utilidades para generar reportes
         self.tablaSimbolos = []
         self.tablaErrores = []
+        self.tablaOptimizacion = []
 
 
         # llamado al menu principal
@@ -148,6 +150,11 @@ class Aplicacion:
 
 
 
+    def reporte_optimizacion(self):
+        print('Generacion de reporte de optimizacion')
+        reporteOptimizacion(self.tablaOptimizacion)
+
+
 
     def tablaBD(self):
         print('Reporte de taba de BD')
@@ -172,7 +179,7 @@ class Aplicacion:
         subMenuReportes = Menu(menuPrincipal, tearoff=False)
         subMenuReportes.add_command(label='Tabla Simbolos', command=self.tablaSimbolo)
         subMenuReportes.add_command(label='Tabla de Errores', command=self.reporteSemantico)
-        subMenuReportes.add_command(label='Tabla BD', command=self.tablaBD)
+        subMenuReportes.add_command(label='Optimizacion', command=self.reporte_optimizacion)
 
         menuPrincipal.add_cascade(menu=subMenuArchivo, label='Archivo')
         menuPrincipal.add_cascade(menu=subMenuReportes, label='Reportes')
