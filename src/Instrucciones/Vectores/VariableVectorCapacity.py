@@ -4,6 +4,9 @@ from src.environment.Simbolo import Simbolo
 from src.Interfaces.TipoMutable import TipoMutable
 
 
+from src.environment.vector3d import Vector3d
+
+
 class VariableVectorCapacity:
 
     def __init__(self, fila, columna, identificador, tipoVector, mutabilidad, varCapacity):
@@ -38,10 +41,41 @@ class VariableVectorCapacity:
         return None
 
 
-
-    
+    # -------------------------------------------------------------------------
+    #                   TRADUCCION DE LA PIRNTLN A 3D
+    # -------------------------------------------------------------------------
     def traducir(self, entorno, traductor3d, cadena):
 
-        
+        cadena3d = ''
+
+        posicion_stack = traductor3d.getStack()
+        traductor3d.aumentarStack()
+
+        posicion_heap = traductor3d.getHeap()
+        traductor3d.aumentarHeap()
+
+        capacidad = self.varCapacity.traducir(entorno, traductor3d, cadena)
+        print(capacidad.valor)
+
+        vector = Vector3d(
+            self.fila,
+            self.columna,
+            self.identificador,
+            TipoExpresion.VECTOR,
+            0,
+            None,
+            posicion_stack
+            )
+
+        entorno.addVariable3d(self.identificador, vector)
+
+
+        cadena3d += f'\n'
+        cadena3d += f'\n'
+        cadena3d += f'/*----  DECLARARCION DE UN VECTOR ----*/\n'
+        cadena3d += f'stack[(int) {posicion_stack}] = H;\n'
+        cadena3d += f'heap[(int) {posicion_heap}] = 0;\n'
+        cadena3d += f'\n'
+        traductor3d.addCadenaTemporal(cadena3d)
 
         return None

@@ -1275,6 +1275,16 @@ fn main() {
 
 
 
+fn main() {
+    let capacidad: usize = 10;
+    let mut pila: Vec<i64> = Vec::with_capacity(capacidad - 2);
+}
+
+
+
+
+
+
 
 
 
