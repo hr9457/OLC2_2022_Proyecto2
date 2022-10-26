@@ -13,7 +13,7 @@ from src.environment.Simbolo3d import Simbolo3d
 class Declaracion(Instruccion):
 
     # constructor
-    def __init__(self, fila, columna, identificador, tipo, valor, mutabilidad, tablaSimbolos, tablaErrores):
+    def __init__(self, fila, columna, identificador, tipo, valor, mutabilidad, tablaSimbolos, tablaErrores, tablaOptimizacion):
         self.fila = fila
         self.columna = columna
         self.identificador = identificador
@@ -22,6 +22,7 @@ class Declaracion(Instruccion):
         self.mutabilidad = mutabilidad
         self.tablaSimbolos = tablaSimbolos
         self.tablaErrores = tablaErrores
+        self.tablaOptimizacion = tablaOptimizacion
 
 
     # metodo ejecutar
@@ -536,7 +537,38 @@ class Declaracion(Instruccion):
         resultado = self.valor.optimizar(entorno, traductor3d, cadena)
         
 
+        # *************************************************************************************
+        # comparacion o busqued de elementos iguales en el diccionari0
+        diccionario_expresiones = traductor3d.getDiccionarioExpresiones()
+        bandera_cambio = False
+
+        string_sin_optimizado = ''
+        for clave, valor in diccionario_expresiones.items():
+            string_sin_optimizado += f'<br>{clave} = {valor}</b>'
+
+
+        for clave, valor in diccionario_expresiones.items():
+            for clave_repetida, valor_repetido in diccionario_expresiones.items():
+                if valor == valor_repetido and clave != clave_repetida:
+                    # print(clave_repetida)
+                    # print(clave)
+                    bandera_cambio = True
+                    diccionario_expresiones.update({clave_repetida: f'{clave}'})
+
         
+        string_optimizado = ''
+        for clave, valor in diccionario_expresiones.items():
+            string_optimizado += f'<br>{clave} = {valor}</b>'
+
+        if bandera_cambio == True:
+            self.tablaOptimizacion.append(['Bloque','Regla 1',string_sin_optimizado,string_optimizado, self.fila])
+
+        traductor3d.clearDiccionario()
+        # *************************************************************************************
+
+
+
+
         # tipo del simbolo --> INTEGER o FLOAT
         # valores de un solo byte asignacion va al stack
         if resultado.tipo == TipoExpresion.INTEGER or resultado.tipo == TipoExpresion.FLOAT:
