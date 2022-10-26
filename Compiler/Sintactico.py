@@ -971,7 +971,7 @@ def p_variables_mut_tipo(p):
     '''  variable   :   LET MUT ID DOSPUNTOS tipo IGUAL exp PUNTOCOMA  '''
 
     # print(p[5])
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[3], p[5], p[7], TipoMutable.MUTABLE ,tablaSimbolos, tablaErrores)
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[3], p[5], p[7], TipoMutable.MUTABLE ,tablaSimbolos, tablaErrores, tablaOptimizacion)
 
 
 
@@ -979,7 +979,7 @@ def p_variables_mut_tipo(p):
 def p_variables_mut(p):
     #     0              1   2   3   4    5      6    
     '''  variable   :   LET MUT ID IGUAL exp PUNTOCOMA  '''
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[3], None, p[5], TipoMutable.MUTABLE ,tablaSimbolos, tablaErrores)
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[3], None, p[5], TipoMutable.MUTABLE ,tablaSimbolos, tablaErrores, tablaOptimizacion)
 
 
 
@@ -989,7 +989,7 @@ def p_variables_mut(p):
 def p_variables_tipo(p):
     #     0              1   2   3        4     5    6    7 
     '''  variable   :   LET ID DOSPUNTOS tipo IGUAL exp PUNTOCOMA  '''
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], p[4], p[6], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], p[4], p[6], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores, tablaOptimizacion)
 
 
 
@@ -999,7 +999,7 @@ def p_variables_tipo(p):
 def p_variables(p):
     #     0              1  2  3      4     5       
     '''  variable   :   LET ID IGUAL exp PUNTOCOMA  '''
-    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], None, p[4], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores)
+    p[0] = Declaracion(p.lineno(1), columnToken(input, p.slice[1]), p[2], None, p[4], TipoMutable.NOMUTABLE, tablaSimbolos, tablaErrores, tablaOptimizacion)
 
 
 

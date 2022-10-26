@@ -84,6 +84,9 @@ fn ordInsercion(arr3: &mut [i64]) {
 
 
 
+
+
+
 fn main(){
 
     let mut arr: [i64; 5] = [25, 2, 17, 30, 1];
@@ -94,11 +97,6 @@ fn main(){
     let mut arr2: [i64; 10] = [5, 20, 8, 17, 65, 2, 40, 4, 35, 90];
     ordSeleccion(arr2);
     println!(arr2);
-
-
-    let mut arr3: [i64; 4] = [90, 3, 40, 10];
-    ordInsercion(arr3);
-    println!(arr3);
 
 }
 
@@ -114,6 +112,11 @@ fn main(){
     let mut arr2: [i64; 10] = [5, 20, 8, 17, 65, 2, 40, 4, 35, 90];
     ordSeleccion(arr2);
     println!(arr2);
+
+
+    let mut arr3: [i64; 4] = [90, 3, 40, 10];
+    ordInsercion(arr3);
+    println!(arr3);
 
 }
 

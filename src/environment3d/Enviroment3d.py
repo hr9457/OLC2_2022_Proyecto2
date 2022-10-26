@@ -18,6 +18,8 @@ class Environment3d:
         self.saltoRetun = ''
         self.satoLogicoTrue = ''
         self.saltoReturn = ''
+        # diccionario para optimizacion
+        self.pila_optimizacion = {}
 
 
     
@@ -455,4 +457,25 @@ class Environment3d:
 
 
 
+
+
+
+    # ********************************************************
+    # PILA PARA OPTIMIZACION
+    def addExpresion(self, id, valor):
+        self.pila_optimizacion.update({id:valor})
+
+
+    def getDiccionarioExpresiones(self):
+        return self.pila_optimizacion
+
+
+    def clearDiccionario(self):
+        self.pila_optimizacion.clear()
+
+
     
+
+
+
+
